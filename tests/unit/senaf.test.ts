@@ -1,4 +1,4 @@
-// Tests de prompts/027: lista blanca de datos hacia la IA (R3) y control de cifras (R4).
+// Tests de plan 027: lista blanca de datos hacia la IA (R3) y control de cifras (R4).
 // Correr con: npm run test:unit
 import { test } from 'node:test'
 import assert from 'node:assert/strict'

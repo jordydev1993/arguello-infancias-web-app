@@ -1,7 +1,7 @@
-// Datos de ejemplo de la pantalla Inicio (prompts/051, 052 y 054, solo diseño). Todo es ficticio:
+// Datos de ejemplo de la pantalla Inicio (plan 051, 052 y 054, solo diseño). Todo es ficticio:
 // ningún nombre ni cifra sale de la base. Conectar datos reales es un plan aparte.
 
-// Cambio contra el período anterior (prompts/054). `sentido` dice si subir es bueno, malo o
+// Cambio contra el período anterior (plan 054). `sentido` dice si subir es bueno, malo o
 // ninguna de las dos cosas: decide el color (verde, rojo o gris).
 export interface Variacion {
   valor: number

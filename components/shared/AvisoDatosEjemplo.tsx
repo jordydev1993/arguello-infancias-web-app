@@ -1,6 +1,6 @@
 import { Info } from 'lucide-react'
 
-// Aviso de que una pantalla de diseño muestra datos ficticios (prompts/051 y 052).
+// Aviso de que una pantalla de diseño muestra datos ficticios (plan 051 y 052).
 export function AvisoDatosEjemplo() {
   return (
     <p className="flex items-center gap-2 rounded-lg border border-outline-variant bg-surface-container-low px-3 py-2 text-small text-on-surface-variant">

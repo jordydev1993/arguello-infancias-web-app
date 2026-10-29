@@ -8,7 +8,7 @@ Closes #
 
 ## Plan
 
-`prompts/NNN-*.md`, aprobado por Jordy el DD/MM.
+Requisitos de la spec que implementa (`REQ-…`). Aprobado por Jordy el DD/MM.
 
 ## Cómo probarlo
 

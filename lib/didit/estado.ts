@@ -1,5 +1,5 @@
 // Reglas de intentos, sesión abierta, fallback y código de resultado a partir de las
-// filas de sesiones_didit (prompts/047). Lógica pura: la usan los endpoints y los
+// filas de sesiones_didit (plan 047). Lógica pura: la usan los endpoints y los
 // tests unitarios. La garantía real está en los triggers de la base; esto replica
 // las mismas reglas para responder antes y con el mensaje correcto.
 import type { CodigoDidit } from './mensajes.ts'

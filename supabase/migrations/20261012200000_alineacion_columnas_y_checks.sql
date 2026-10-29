@@ -1,4 +1,4 @@
--- prompts/042: alineación de procesos, parte 1 (columnas y restricciones).
+-- plan 042: alineación de procesos, parte 1 (columnas y restricciones).
 -- P6: motivo de ingreso del legajo (L-EX-15) y destinatario del informe (INF-EX-06).
 -- P7: coherencia de fechas de la medicación (M-EX-04).
 -- P8: el informe tiene solo dos estados, borrador y finalizado.
@@ -93,6 +93,6 @@ ALTER TABLE public.informes
   ADD CONSTRAINT informes_estado_check
   CHECK (estado IN ('borrador', 'finalizado'));
 
--- Funciones de trigger: nadie las llama por RPC (mismo criterio que prompts/038).
+-- Funciones de trigger: nadie las llama por RPC (mismo criterio que plan 038).
 REVOKE EXECUTE ON FUNCTION public.fn_legajos_motivo_ingreso()       FROM PUBLIC, anon, authenticated;
 REVOKE EXECUTE ON FUNCTION public.fn_informes_exigir_destinatario() FROM PUBLIC, anon, authenticated;

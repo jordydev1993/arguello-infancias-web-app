@@ -1,4 +1,4 @@
-// Cuándo la pantalla consulta el estado de una sesión (N-6, prompts/049): cada 4 s
+// Cuándo la pantalla consulta el estado de una sesión (N-6, plan 049): cada 4 s
 // mientras el resultado está pendiente, y hasta 90 s. Después muestra "Seguimos
 // esperando" y un botón "Actualizar". Lógica pura, probada en tests/unit/didit-polling.test.ts.
 

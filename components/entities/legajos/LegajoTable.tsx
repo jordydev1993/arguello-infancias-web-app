@@ -11,7 +11,7 @@ interface LegajoTableProps {
   data: Legajo[]
   loading?: boolean
   onView?: (row: Legajo) => void
-  // NNyA con una alerta de incidente sin resolver: se marca "Incidente pendiente" (prompts/037)
+  // NNyA con una alerta de incidente sin resolver: se marca "Incidente pendiente" (plan 037)
   nnyaConIncidentePendiente?: Set<string>
 }
 

@@ -1,4 +1,4 @@
-// Códigos estables y mensajes de la verificación de identidad con Didit (prompts/047).
+// Códigos estables y mensajes de la verificación de identidad con Didit (plan 047).
 // Los textos de la pantalla son los de D-33 (Plan 035 §7.4): no se cambian acá sin
 // cambiar la decisión. Los códigos sin texto en D-33 llevan un mensaje técnico o null.
 

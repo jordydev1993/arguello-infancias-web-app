@@ -15,7 +15,7 @@ export type CrearSesionInput =
   | { proposito: 'retiro'; retiro_id: string; sandbox_scenario?: SandboxScenario }
   | { proposito: 'validacion_referente'; referente_id: string; consentimiento: true; sandbox_scenario?: SandboxScenario }
 
-// POST /api/didit/sesiones (prompts/047). Devuelve siempre la respuesta con su code y
+// POST /api/didit/sesiones (plan 047). Devuelve siempre la respuesta con su code y
 // message (D-33): un 409 o un 502 no son excepciones, la pantalla los muestra.
 export function useCrearSesionDidit() {
   const qc = useQueryClient()

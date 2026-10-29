@@ -67,7 +67,7 @@ export function TutelaTab({ nnyaId, legajoActivo }: TutelaTabProps) {
       ) : (
         <VinculoTutelaList
           vinculos={vinculos}
-          // Solo Admin: vinculos_tutela_update_admin rechaza el guardado de otros roles (prompts/050).
+          // Solo Admin: vinculos_tutela_update_admin rechaza el guardado de otros roles (plan 050).
           onEdit={legajoActivo && role === 'Admin' ? (v) => { setEditando(v); setOpen(true) } : undefined}
         />
       )}

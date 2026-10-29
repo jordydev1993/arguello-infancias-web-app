@@ -89,7 +89,7 @@ export interface AudienciaJudicial extends Omit<Row<'audiencias_judiciales'>, 'e
 
 export type AuditLog = Row<'audit_log'>
 
-// ── FASE A1 (AGENTS-WEB.md § Roadmap) — ver prompts/012, prompts/019 ──
+// ── FASE A1 (el documento de arquitectura § Roadmap) — ver plan 012, plan 019 ──
 
 export interface Referente extends Omit<Row<'referentes'>, 'tipo'> {
   tipo: 'familiar' | 'educador' | 'vecino' | 'otro'
@@ -108,7 +108,7 @@ export interface ValidacionRenaper
   respuesta_cruda: Record<string, unknown> | null
 }
 
-// Retiros con verificación Didit (prompts/028, 046 y 049).
+// Retiros con verificación Didit (plan 028, 046 y 049).
 export interface AutorizacionRetiro extends Omit<Row<'autorizaciones_retiro'>, 'estado'> {
   estado: 'vigente' | 'revocada'
   nnya_tutores?: NnyaTutor

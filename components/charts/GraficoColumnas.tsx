@@ -12,7 +12,7 @@ interface GraficoColumnasProps<T extends object> {
   descripcion: string
 }
 
-// Columnas agrupadas en el tiempo (prompts/052, skill dataviz): conteos chicos por mes que,
+// Columnas agrupadas en el tiempo (plan 052): conteos chicos por mes que,
 // en el mismo eje que una cantidad grande, quedarían aplastados contra el piso. Columnas de
 // hasta 24 px con 2 px de aire entre vecinas; leyenda siempre presente.
 export function GraficoColumnas<T extends object>({

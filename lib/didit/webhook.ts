@@ -1,4 +1,4 @@
-// Lógica pura del webhook de Didit (prompts/048): qué se lee del payload, cómo se
+// Lógica pura del webhook de Didit (plan 048): qué se lee del payload, cómo se
 // actualiza la sesión y qué validación RENAPER corresponde. Sin Next ni Supabase,
 // para poder probarla en tests unitarios.
 import { z } from 'zod'

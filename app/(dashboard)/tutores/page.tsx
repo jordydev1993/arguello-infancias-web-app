@@ -38,7 +38,7 @@ export default function TutoresPage() {
       toast({ title: 'Tutor eliminado', variant: 'success' })
     } catch (e) {
       const err = e as { code?: string; message?: string }
-      // 23503: el tutor tiene NNyA asignados (nnya_tutores.tutor_id es RESTRICT, prompts/036)
+      // 23503: el tutor tiene NNyA asignados (nnya_tutores.tutor_id es RESTRICT, plan 036)
       const description = err.code === '23503'
         ? 'El tutor tiene NNyA asignados. Desasignalo de cada NNyA antes de eliminarlo.'
         : err.message

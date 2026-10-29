@@ -13,7 +13,7 @@ interface ToolbarProps {
   className?: string
 }
 
-// Barra de herramientas sobre una tabla (prompts/052): búsqueda y filtros en una fila.
+// Barra de herramientas sobre una tabla (plan 052): búsqueda y filtros en una fila.
 export function Toolbar({ search, children, className }: ToolbarProps) {
   return (
     <div className={cn('flex flex-wrap items-center gap-3', className)}>

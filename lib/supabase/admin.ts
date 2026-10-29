@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 
 /**
- * Cliente con la service role, solo del lado del servidor (prompts/048).
+ * Cliente con la service role, solo del lado del servidor (plan 048).
  * Lo usa el webhook de Didit, que no tiene sesión de usuario y se autentica con la
  * firma HMAC. Nunca importarlo desde un componente de cliente.
  * Devuelve null si falta la configuración, para responder un error controlado.

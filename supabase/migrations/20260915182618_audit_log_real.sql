@@ -1,5 +1,5 @@
 -- Audit log real: fn_audit_trigger() + trg_audit_* en las 27 tablas de negocio
--- (todas menos audit_log misma). Resuelve la decisión A/B/C de prompts/012 (issue #2):
+-- (todas menos audit_log misma). Resuelve la decisión A/B/C de plan 012 (issue #2):
 -- Jordy confirmó Opción C (auditar todo). Adaptado al schema real de audit_log
 -- (registro_id/usuario_id), distinto del que tenía la migración superseded
 -- 20260514000018_audit_log.sql (id_registro/auth_uid).

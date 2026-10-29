@@ -2,8 +2,8 @@
 
 **Fecha:** 2026-09-29
 **Autora del análisis:** Meli (QA / Testing, integraciones backend, integración Didit)
-**Plan asociado:** `prompts/030-qa-didit-retiro.md`
-**Fuentes:** `TAREAS-PENDIENTES-DIDIT-POR-INTEGRANTE.md`, `INFORME-VALIDACION-IDENTIDAD-RETIRO-DIDIT.md`, `INFORME-WEBHOOK-DIDIT-PARA-MELI.md`, `AGENTS-WEB.md`, `prompts/016-webhook-didit.md`, `prompts/029-playwright-testing-setup.md`
+**Plan asociado:** plan 030
+**Fuentes:** `TAREAS-PENDIENTES-DIDIT-POR-INTEGRANTE.md`, `INFORME-VALIDACION-IDENTIDAD-RETIRO-DIDIT.md`, `INFORME-WEBHOOK-DIDIT-PARA-MELI.md`, el documento de arquitectura, plan 016, plan 029
 
 > Alcance de este documento: **análisis y planificación de casos de prueba.** No implementa código, no define campos, no resuelve decisiones funcionales. Los 4 escenarios A–D del PDF fuente §6 **no son ejecutables hoy** y aquí se documentan como especificación.
 >
@@ -59,7 +59,7 @@ Los 3 pasos dependen de tablas que no existen. **No se implementan todavía.**
 
 > **⚠️ Esta subsección describe el estado del repositorio en `b4ab8e3` (2026-09-29) y ya NO describe el estado actual.** En el `master` `84c4d23` **no existe `playwright.config.ts`**, **no existen `tests/01`–`04`**, y **no hay reglas de testing agregadas a `.gitignore`** (el bloque `# testing` sigue con solo `/coverage`). Ninguna de estas afirmaciones debe leerse como presente. Se conserva como registro del relevamiento.
 
-Rama `master`, HEAD `b4ab8e3`. Untracked: `playwright.config.ts`, `tests/`, `prompts/027-…`. (`playwright-report/`, `test-results/`, `dev.log`, `test-output.txt` y `test-results-summary.txt` también estaban untracked, pero **ya no aparecen**: se agregaron a `.gitignore` el 2026-09-29.)
+Rama `master`, HEAD `b4ab8e3`. Untracked: `playwright.config.ts`, `tests/`, `plan 027-…`. (`playwright-report/`, `test-results/`, `dev.log`, `test-output.txt` y `test-results-summary.txt` también estaban untracked, pero **ya no aparecen**: se agregaron a `.gitignore` el 2026-09-29.)
 
 **Está incompleto, no "listo":**
 - `playwright.config.ts` **no tiene `webServer`**.
@@ -91,9 +91,9 @@ HTTP recibido: **500**.
 >
 > **Actualización (2026-10-08) — el webhook no necesita Supabase:** el Plan 032 exceptúa `/api/didit/webhook` del middleware (`proxy.ts` sale con `NextResponse.next()` antes de crear el cliente de Supabase). La prueba HTTP real de E-4 (§9, §11) corre **sin** `NEXT_PUBLIC_SUPABASE_*` y lo confirma indirectamente. El bloqueante descrito arriba **ya no aplica al webhook** (solo al resto de las rutas).
 
-### 2.3 Consecuencia sobre el criterio CA-5 de `prompts/016`
+### 2.3 Consecuencia sobre el criterio CA-5 de plan 016
 
-`prompts/016` define CA-5: *"Sin `DIDIT_WEBHOOK_SECRET` en el entorno → 500"*. Ese camino **es inalcanzable si tampoco faltan las vars de Supabase**: el middleware devuelve 500 primero. El código de salida coincide (500), el camino no. Queda registrado como R-4 en §7.
+plan 016 define CA-5: *"Sin `DIDIT_WEBHOOK_SECRET` en el entorno → 500"*. Ese camino **es inalcanzable si tampoco faltan las vars de Supabase**: el middleware devuelve 500 primero. El código de salida coincide (500), el camino no. Queda registrado como R-4 en §7.
 
 ### 2.4 Lo único ejecutable hoy
 
@@ -472,12 +472,12 @@ Cuando P-01 esté resuelta, este análisis se convierte en **5 casos (E-01 a E-0
 
 ## 8. Hallazgos de documentación desactualizada
 
-> Conforme a la decisión D-4, **no se corrigen**. Se registran acá, y en `AGENTS-WEB.md:32` corresponde incorporarlos a "Deuda conocida" cuando alguien tenga un plan aprobado.
+> Conforme a la decisión D-4, **no se corrigen**. Se registran acá, y en el documento de arquitectura:32` corresponde incorporarlos a "Deuda conocida" cuando alguien tenga un plan aprobado.
 
 | # | Documento y línea | Afirmación | Realidad |
 |---|---|---|---|
-| H-1 | `AGENTS-WEB.md:77` | "`playwright` … sin tests escritos" | Hay 4 specs (2 skippeados) y 4 más planificados |
-| H-2 | `AGENTS-WEB.md:172` vs `INFORME-FALTANTES:74` | Deuda "tests" → issue **#30** | El issue de tests web es el **#9** |
+| H-1 | el documento de arquitectura:77` | "`playwright` … sin tests escritos" | Hay 4 specs (2 skippeados) y 4 más planificados |
+| H-2 | el documento de arquitectura:172` vs `INFORME-FALTANTES:74` | Deuda "tests" → issue **#30** | El issue de tests web es el **#9** |
 | H-3 | `INFORME-VALIDACION:32` y `:76` | "audit_log no cableada, 0 triggers activos (issue #23)" | **Resuelto** por la migración `20260915182618_audit_log_real.sql`: `fn_audit_trigger()` + 27 triggers `trg_audit_*` |
 | H-4 | `TAREAS-PENDIENTES:74` | Tarea de Meli: "resolver o coordinar el audit log real (issue #2, 0 triggers hoy)" | **Resuelto.** Una de las 8 tareas de Meli ya no está pendiente |
 | H-5 | `INFORME-VALIDACION:50-51` y `:73` (RNF-05) | "Ninguna variable de entorno de credenciales Didit"; "RNF-05 ❌ No implementado" | Ambas existen; el webhook está implementado y deployado |
@@ -551,7 +551,7 @@ A-01, B-01, C-01, D-01 + D-01/F-01/G-01/G-02/H-01/H-02/L-01/M-01 + E-01 a E-05 u
 >
 > El DNI esperado (`expected_details.identification_number`) **no rechaza la sesión**: Didit solo genera una advertencia. El control real es la comparación de `personal_number` en nuestro webhook (D-14).
 >
-> Para la QA de punta a punta, el endpoint de crear sesión (#23) acepta un `sandbox_scenario` opcional **solo en sandbox** (decisión de Jordy del 21/10, ver `prompts/045`). Para la QA se usa solo el sandbox (sin costo), con DNI de prueba, y DNI de integrantes del equipo solo si un escenario lo necesita.
+> Para la QA de punta a punta, el endpoint de crear sesión (#23) acepta un `sandbox_scenario` opcional **solo en sandbox** (decisión de Jordy del 21/10, ver plan 045). Para la QA se usa solo el sandbox (sin costo), con DNI de prueba, y DNI de integrantes del equipo solo si un escenario lo necesita.
 
 ---
 
@@ -559,7 +559,7 @@ A-01, B-01, C-01, D-01 + D-01/F-01/G-01/G-02/H-01/H-02/L-01/M-01 + E-01 a E-05 u
 
 | Tarea (línea del doc) | Estado real | Qué cambió respecto del documento |
 |---|---|---|
-| PLAN formal (`:68`) | En curso | Este es `prompts/028` (parcial: solo la parte de QA, que es la que no depende de Sofi) |
+| PLAN formal (`:68`) | En curso | Este es plan 028 (parcial: solo la parte de QA, que es la que no depende de Sofi) |
 | Route handler para crear sesión (`:69`) | ⬜ Bloqueado por Sofi | Sin dónde persistir el `session_id` |
 | Webhook con lógica de negocio (`:70`) | ⬜ Bloqueado por Sofi | `TODO(Meli)` en `route.ts:41-48` |
 | Endpoint de consulta de estado (`:71`) | ⬜ Bloqueado por Sofi | — |
@@ -606,7 +606,7 @@ corrida 3:  14 passed (1.0s)
 
 ### ⚠️ Lint global: falla por errores preexistentes, no por E-2
 
-El criterio de aceptación del plan (`prompts/028`, CA-2) decía que `npm run lint` debía "seguir en verde". **Ese criterio era insatisfacible desde el inicio**: el baseline del repositorio ya tenía **85 errores** antes de que E-2 empezara, todos en código de la app.
+El criterio de aceptación del plan (plan 028, CA-2) decía que `npm run lint` debía "seguir en verde". **Ese criterio era insatisfacible desde el inicio**: el baseline del repositorio ya tenía **85 errores** antes de que E-2 empezara, todos en código de la app.
 
 Desglose de los 85:
 
@@ -619,7 +619,7 @@ Desglose de los 85:
 | `render` | 1 |
 
 - **`tests/unit/didit-signature.test.ts` introduce 0 errores.** Verificado corriendo ESLint sobre el archivo aislado: exit 0.
-- **No se corrigieron.** Quedan fuera del alcance de Meli/E-2, y `AGENTS-WEB.md:86` prohíbe refactors no relacionados que no fueron solicitados. Se registran como **deuda preexistente** (R-11 en el plan) para que se decida por separado.
+- **No se corrigieron.** Quedan fuera del alcance de Meli/E-2, y el documento de arquitectura:86` prohíbe refactors no relacionados que no fueron solicitados. Se registran como **deuda preexistente** (R-11 en el plan) para que se decida por separado.
 
 ### Cobertura alcanzada
 
@@ -831,7 +831,7 @@ finalizaron con `ROLLBACK`.
 
 ---
 
-## Pruebas de seguridad en SQL — `tests/sql/didit-seguridad.sql` (prompts/046)
+## Pruebas de seguridad en SQL — `tests/sql/didit-seguridad.sql` (plan 046)
 
 **Fecha:** 21/10/2026 · **Entorno:** Supabase local (Docker) · **Resultado:** 12/12 ✅
 
@@ -863,7 +863,7 @@ Corre todo en una transacción con `ROLLBACK`, con datos ficticios (DNI `99…`)
 
 ---
 
-## Endpoints de sesiones Didit — prompts/047
+## Endpoints de sesiones Didit — plan 047
 
 **Fecha:** 21/10/2026 · **Entorno:** Supabase local + `next dev` apuntando a la base local, con la app de **sandbox** de Didit · **Resultado:** 18/18 ✅ de punta a punta, y 14 tests unitarios nuevos (`tests/unit/didit-client.test.ts`, `tests/unit/didit-estado.test.ts`).
 
@@ -886,7 +886,7 @@ El log del servidor solo registra el tipo de falla (`http_4xx (400)`), sin DNI n
 
 ---
 
-## Lógica del webhook — prompts/048
+## Lógica del webhook — plan 048
 
 **Fecha:** 21/10/2026 · **Entorno:** Supabase local + `next dev` levantado por el test · **Resultado:** 20/20 ✅ en `npm run test:integration` (9 con base y 11 del contrato HTTP) y 8 tests unitarios nuevos (`tests/unit/didit-webhook-logica.test.ts` y el borrado en `didit-client.test.ts`).
 
@@ -911,7 +911,7 @@ El log del servidor solo registra el tipo de falla (`http_4xx (400)`), sin DNI n
 
 ---
 
-## Pantalla de retiros — prompts/049 (primera parte)
+## Pantalla de retiros — plan 049 (primera parte)
 
 **Fecha:** 21/10/2026 · **Entorno:** `next dev` contra Supabase local, en el navegador, con los usuarios de prueba Admin y Equipo Tecnico (`qa.direccion@` y `qa.educador@arguelloinfancias.test`, solo locales) · **Resultado:** ✅
 
@@ -933,7 +933,7 @@ Sin errores en la consola del navegador. Una advertencia de hidratación (un `Ba
 
 **Pendiente:** el QR y el polling con una sesión real necesitan `DIDIT_WORKFLOW_ID`. La validación de referentes y el formulario de vínculos van en la segunda parte del plan 049.
 
-## Referentes y vínculos — prompts/049 (segunda parte)
+## Referentes y vínculos — plan 049 (segunda parte)
 
 **Fecha:** 21/10/2026 · **Entorno:** `next dev` contra Supabase local, en el navegador · **Resultado:** ✅
 

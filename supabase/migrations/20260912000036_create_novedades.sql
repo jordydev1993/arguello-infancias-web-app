@@ -1,7 +1,7 @@
 -- Tabla nueva de mobile (F2/F3): diario liviano de novedades por NNA, en tiempo real.
 -- Única tabla genuinamente nueva del modelo mobile, según decisión registrada en
 -- mobile/docs/04-backend/modelo-de-datos/CORRECCIONES-Y-DUDAS-PARA-MELI-SOFI.md §2.
--- Ver prompts/015-tabla-novedades.md para el análisis completo (diseño tomado de
+-- Ver plan 015 para el análisis completo (diseño tomado de
 -- `incidentes`, no del docx original: nnya_id en vez de residente_id, `tipo` en vez
 -- de `tipo_novedad`, usuario_id nullable + ON DELETE SET NULL en vez de NOT NULL +
 -- RESTRICT, sin deleted_at).

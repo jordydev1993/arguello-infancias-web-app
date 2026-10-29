@@ -107,7 +107,7 @@ En orden, sin estimar tiempos (eso corresponde a un plan formal cuando se aprueb
 6. Frontend: pantalla de registrar retiro (selección NNyA → tutor → captura vía Didit → confirmación) siguiendo el patrón `Form.tsx`/`List.tsx` ya establecido.
 7. Definir y aplicar la política de minimización de datos (qué se guarda y qué no) antes de escribir el primer registro real.
 
-Este orden no es una implementación aprobada — es la ruta que muestra el propio análisis; falta el plan formal (`prompts/`) del ciclo de trabajo del proyecto antes de tocar código, una vez que el equipo decida encarar esto.
+Este orden no es una implementación aprobada — es la ruta que muestra el propio análisis; falta el plan formal (plan de implementaciÃ³n) del ciclo de trabajo del proyecto antes de tocar código, una vez que el equipo decida encarar esto.
 
 ---
 

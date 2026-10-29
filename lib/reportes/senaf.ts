@@ -1,4 +1,4 @@
-// Informe mensual institucional para SENAF (prompts/027).
+// Informe mensual institucional para SENAF (plan 027).
 // Lógica pura, sin dependencias de Next ni de Supabase: se usa en el route
 // handler, en la UI y en los tests unitarios (tests/unit/senaf.test.ts).
 import { z } from 'zod'

@@ -9,7 +9,7 @@ import { ConsentimientoTexto } from '@/components/entities/retiros/Consentimient
 import { VerificacionDidit } from '@/components/entities/retiros/VerificacionDidit'
 import type { Referente } from '@/types/database.types'
 
-// Validación de identidad de un referente con Didit (Plan 035 §8.2, prompts/049).
+// Validación de identidad de un referente con Didit (Plan 035 §8.2, plan 049).
 // El webhook crea la validaciones_renaper (D-11); con 'aprobado', el vínculo puede pasar
 // a vigente (D-16). Sin consentimiento, queda la validación manual de siempre.
 export function ValidarIdentidadDidit({ referente, sandbox }: { referente: Referente; sandbox: boolean }) {

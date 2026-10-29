@@ -12,7 +12,7 @@ interface PanelProps {
   className?: string
 }
 
-// Bloque de contenido con título (prompts/052): sin tarjeta ni sombra; lo separan los
+// Bloque de contenido con título (plan 052): sin tarjeta ni sombra; lo separan los
 // filetes de la grilla en la que se ubica.
 export function Panel({ title, hint, action, children, className }: PanelProps) {
   return (

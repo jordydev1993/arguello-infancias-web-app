@@ -5,7 +5,7 @@ import { InformeSenafPdf } from '@/lib/reportes/InformeSenafPdf'
 import { MESES } from '@/lib/reportes/senaf'
 import type { ReporteSenaf } from '@/types/database.types'
 
-// Descarga del informe SENAF en PDF. Solo Admin y solo informes aprobados (prompts/027).
+// Descarga del informe SENAF en PDF. Solo Admin y solo informes aprobados (plan 027).
 export async function GET(_request: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   const supabase = await createClient()

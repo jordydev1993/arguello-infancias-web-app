@@ -1,4 +1,4 @@
--- FASE E (issue #7, prompts/026): genera automáticamente las 2 filas de
+-- FASE E (issue #7, plan 026): genera automáticamente las 2 filas de
 -- seguimiento_post_egreso (30/60 días) en el momento del egreso, sin necesitar
 -- infraestructura de cron. Mismo patrón que fn_crear_alerta_incidente_grave
 -- (clean_schema.sql): SECURITY DEFINER, disparado por evento.

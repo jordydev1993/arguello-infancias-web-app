@@ -1,5 +1,5 @@
 -- La aprobación del informe SENAF la firma siempre el usuario de la sesión: la base
--- completa aprobado_por / aprobado_at e ignora lo que mande el cliente (prompts/027).
+-- completa aprobado_por / aprobado_at e ignora lo que mande el cliente (plan 027).
 CREATE OR REPLACE FUNCTION fn_reportes_senaf_bloquear_aprobado()
 RETURNS TRIGGER
 LANGUAGE plpgsql

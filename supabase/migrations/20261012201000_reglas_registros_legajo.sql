@@ -1,11 +1,11 @@
--- prompts/042: alineación de procesos, parte 2 (P3, resto).
+-- plan 042: alineación de procesos, parte 2 (P3, resto).
 -- Lleva a la base dos reglas que hasta ahora solo hacía cumplir la interfaz:
 --   1. Un legajo que no está activo no admite registros nuevos ni cambios (L-EX-09, L-EX-10 y
 --      las equivalentes por entidad: T-EX-04/05, I-EX-02/05, INF-EX-04, DGN-EX-04, M-EX-03/05,
 --      D-EX-05, AJ-EX-03).
 --   2. Los estados terminales no se modifican: alerta completada (A-EX-05), diagnóstico resuelto,
 --      medicación finalizada, informe enviado (INF-EX-05) e incidente cerrado.
--- Las reglas de estado del propio legajo ya están en trg_legajos_reglas_estado (prompts/037).
+-- Las reglas de estado del propio legajo ya están en trg_legajos_reglas_estado (plan 037).
 --
 -- Solo actúan sobre escrituras nuevas: las filas que ya existen en legajos no activos
 -- (verificado el 2026-10-12: 1 turno, 1 informe, 1 audiencia) quedan de solo lectura.
@@ -128,6 +128,6 @@ CREATE TRIGGER trg_incidentes_estado_terminal
   BEFORE UPDATE ON public.incidentes
   FOR EACH ROW EXECUTE FUNCTION public.fn_bloquear_estado_terminal('cerrado');
 
--- Funciones de trigger: nadie las llama por RPC (mismo criterio que prompts/038).
+-- Funciones de trigger: nadie las llama por RPC (mismo criterio que plan 038).
 REVOKE EXECUTE ON FUNCTION public.fn_exigir_legajo_activo()     FROM PUBLIC, anon, authenticated;
 REVOKE EXECUTE ON FUNCTION public.fn_bloquear_estado_terminal() FROM PUBLIC, anon, authenticated;

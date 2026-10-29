@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/constants/queryKeys'
 import type { RespuestaDidit } from '@/lib/didit/mensajes'
 
-// POST /api/didit/sesiones/[id]/fallback: solo Admin, con motivo (prompts/047).
+// POST /api/didit/sesiones/[id]/fallback: solo Admin, con motivo (plan 047).
 export function useFallbackDidit() {
   const qc = useQueryClient()
   return useMutation({

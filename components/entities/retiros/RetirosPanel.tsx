@@ -7,7 +7,7 @@ import { CasosRevisionList } from './CasosRevisionList'
 import { RegistrarRetiro } from './RegistrarRetiro'
 import { RetiroList } from './RetiroList'
 
-// Pantalla real de retiros (prompts/049). Las pestañas de Admin se ocultan a Equipo
+// Pantalla real de retiros (plan 049). Las pestañas de Admin se ocultan a Equipo
 // Tecnico; la garantía es RLS y los triggers de la base.
 export function RetirosPanel({ sandbox }: { sandbox: boolean }) {
   const { role } = useAuth()

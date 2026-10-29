@@ -45,14 +45,14 @@ export function EstadoRetiroBadge({ estado }: { estado: Retiro['estado'] }) {
   return <Badge variant={variant}>{texto}</Badge>
 }
 
-// Un retiro de punta a punta (Plan 035 §8.1, prompts/049): consentimiento (D-26),
+// Un retiro de punta a punta (Plan 035 §8.1, plan 049): consentimiento (D-26),
 // verificación con Didit, registro (RF20/21) y cierre (RF22).
 export function RetiroEnCurso({ retiro, sandbox }: { retiro: Retiro; sandbox: boolean }) {
   const qc = useQueryClient()
   const consentimiento = useUpdateRetiroConsentimiento()
   const sesiones = retiro.sesiones_didit ?? []
   const verificada = tieneIdentidadVerificada(sesiones) || retiro.metodo_verificacion === 'manual'
-  // prompts/050: al abrir el retiro se muestra el resultado de su última sesión.
+  // plan 050: al abrir el retiro se muestra el resultado de su última sesión.
   const ultimaSesionId = [...sesiones].sort((a, b) => b.created_at.localeCompare(a.created_at))[0]?.id
 
   const refrescar = useCallback(() => {

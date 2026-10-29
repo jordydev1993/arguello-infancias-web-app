@@ -43,7 +43,7 @@ export async function POST(request: Request) {
   // Solo session_id y status: nunca decision, personal_number, nombres ni URLs (D-28).
   console.log(`[didit/webhook] session_id=${session_id} status=${status}`)
 
-  // El webhook no tiene sesión de usuario: escribe con la service role (prompts/047, decisión 1).
+  // El webhook no tiene sesión de usuario: escribe con la service role (plan 047, decisión 1).
   const supabase = createAdminClient()
   if (!supabase) {
     console.error('[didit/webhook] Falta la configuración de Supabase en el entorno.')

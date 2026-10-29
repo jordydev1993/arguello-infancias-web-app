@@ -1,4 +1,4 @@
-// Tests de prompts/047: cliente HTTP de Didit (RNF-13: timeout, reintento, errores controlados).
+// Tests de plan 047: cliente HTTP de Didit (RNF-13: timeout, reintento, errores controlados).
 // Correr con: npm run test:unit. Sin red: `fetch` se inyecta. La API key es FICTICIA.
 import { test } from 'node:test'
 import assert from 'node:assert/strict'

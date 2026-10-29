@@ -1,4 +1,4 @@
-// Tests de prompts/049: cuándo la pantalla consulta el estado de la sesión (N-6).
+// Tests de plan 049: cuándo la pantalla consulta el estado de la sesión (N-6).
 // Correr con: npm run test:unit
 import { test } from 'node:test'
 import assert from 'node:assert/strict'

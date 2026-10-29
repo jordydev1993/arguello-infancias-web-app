@@ -23,7 +23,7 @@ export function toast(opts: Omit<ToastItem, 'id'>) {
   _toast?.(opts)
 }
 
-// Cada variante lleva ícono además de color (prompts/053): el estado nunca depende solo
+// Cada variante lleva ícono además de color (plan 053): el estado nunca depende solo
 // del color. Advertencias y errores se anuncian con prioridad a los lectores de pantalla.
 const VARIANTES: Record<ToastVariant, { icono: LucideIcon | null; color: string; urgente: boolean }> = {
   default: { icono: null, color: '', urgente: false },

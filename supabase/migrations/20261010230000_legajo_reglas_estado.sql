@@ -1,4 +1,4 @@
--- prompts/037: reglas de estado del legajo en la base (opción A) y cierre de incidentes con acciones.
+-- plan 037: reglas de estado del legajo en la base (opción A) y cierre de incidentes con acciones.
 -- El legajo nace activo; solo pasa de activo a cerrado (con motivo) y de cerrado a archivado
 -- (12 meses después del cierre); nunca se reactiva, y cerrado o archivado es de solo lectura.
 
@@ -59,7 +59,7 @@ CREATE TRIGGER trg_legajos_reglas_estado
   EXECUTE FUNCTION public.fn_legajos_reglas_estado();
 
 -- Un legajo nunca se borra: se cierra con motivo. Las FKs de legajo_id ya son RESTRICT
--- (prompts/036), pero un legajo sin registros asociados todavía se podía borrar.
+-- (plan 036), pero un legajo sin registros asociados todavía se podía borrar.
 CREATE OR REPLACE FUNCTION public.fn_legajos_prohibir_delete()
 RETURNS TRIGGER
 LANGUAGE plpgsql

@@ -7,9 +7,8 @@ físicos fragmentados por un sistema trazable, con alertas sobre eventos crític
 El complemento móvil vive en el repo `arguello-infancias-mobile` y comparte la misma base
 de datos.
 
-**La fuente de verdad del proyecto es [`AGENTS-WEB.md`](./AGENTS-WEB.md)** — arquitectura,
-modelo de datos, roles, seguridad, roadmap y deuda conocida. Este README es solo para
-levantar el entorno local.
+La planificación del proyecto (sprints, Gantt y asignación del equipo) está en
+[`docs/gestion/`](./docs/gestion/). Este README es para levantar el entorno local.
 
 ## Stack
 
@@ -69,7 +68,7 @@ levantar el entorno local.
 | `npm run test:unit` | Tests unitarios con el runner de Node (`tests/unit/`), sin dependencias extra |
 
 Antes de dar por terminada una tarea: `npm run lint`, `npm run build`, y `npx tsc --noEmit`
-si se tocaron tipos (ver flujo de trabajo completo en `AGENTS-WEB.md`).
+si se tocaron tipos.
 
 ## Base de datos
 
@@ -99,7 +98,7 @@ se edita a mano).
 
 ## Estructura
 
-Ver `AGENTS-WEB.md` § Arquitectura para el detalle completo de capas y convenciones. Resumen:
+Capas y convenciones:
 
 ```
 components/ui/            primitivas (shadcn/Radix)
@@ -108,5 +107,5 @@ components/legajos/tabs/  sub-tabs del detalle de legajo
 hooks/<entidad>/          un hook useQuery/useMutation por operación
 lib/validations/*.schema.ts  un schema zod por entidad
 supabase/migrations/      migraciones SQL — fuente de verdad del schema
-prompts/                  historial de planes de implementación (Vibe Engineering + SDD)
+docs/gestion/             planificación Scrum: sprints, Gantt y carga del equipo
 ```

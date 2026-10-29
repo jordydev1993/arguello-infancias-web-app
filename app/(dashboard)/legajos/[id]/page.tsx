@@ -51,7 +51,7 @@ function formatFecha(fecha: string | null) {
   catch { return fecha }
 }
 
-// Un legajo cerrado se puede archivar 12 meses después del cierre (prompts/037).
+// Un legajo cerrado se puede archivar 12 meses después del cierre (plan 037).
 function fechaArchivable(fechaCierre: string | null): Date | null {
   if (!fechaCierre) return null
   const d = new Date(fechaCierre + 'T00:00:00')
@@ -145,7 +145,7 @@ export default function LegajoDetailPage({ params }: { params: Promise<{ id: str
   const nnya = legajo.nnya as any
   const legajoActivo = legajo.estado === 'activo'
   const alertasPendientes = alertas.filter((a) => a.estado === 'pendiente' || a.estado === 'en_proceso').length
-  // Indicador "Incidente pendiente": alerta de incidente grave sin resolver (prompts/037)
+  // Indicador "Incidente pendiente": alerta de incidente grave sin resolver (plan 037)
   const incidentePendiente = alertas.some(
     (a) => a.tipo === 'incidente' && (a.estado === 'pendiente' || a.estado === 'en_proceso'),
   )

@@ -7,7 +7,7 @@ import {
 } from 'lucide-react'
 import type { AppRole } from '@/context/AuthContext'
 
-// Navegación agrupada (prompts/051 y 052). Los módulos, su orden y quién los ve son los
+// Navegación agrupada (plan 051 y 052). Los módulos, su orden y quién los ve son los
 // mismos de siempre; solo se agrupan en secciones plegables.
 
 export type GrupoId = 'nucleo' | 'tutela' | 'seguimiento' | 'salud' | 'institucional' | 'administracion'
@@ -94,7 +94,7 @@ export const GRUPOS: Grupo[] = [
   },
 ]
 
-// Favoritos (prompts/052, solo diseño): accesos fijos a rutas existentes; no se editan.
+// Favoritos (plan 052, solo diseño): accesos fijos a rutas existentes; no se editan.
 export const FAVORITOS: { href: string; label: string }[] = [
   { href: '/legajos', label: 'Legajos activos' },
   { href: '/retiros', label: 'Retiros en curso' },

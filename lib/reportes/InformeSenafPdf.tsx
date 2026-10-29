@@ -1,4 +1,4 @@
-// Documento PDF del informe SENAF aprobado (prompts/027). Se renderiza en el servidor.
+// Documento PDF del informe SENAF aprobado (plan 027). Se renderiza en el servidor.
 import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer'
 import { nombrePeriodo } from '@/lib/reportes/senaf'
 import type { ReporteSenaf } from '@/types/database.types'

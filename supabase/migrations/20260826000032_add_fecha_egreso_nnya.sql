@@ -1,6 +1,6 @@
--- FASE A0 (AGENTS.md sección 11): fecha de egreso como dato de primera clase en nnya,
+-- FASE A0 (el documento de arquitectura sección 11): fecha de egreso como dato de primera clase en nnya,
 -- reemplaza la inferencia frágil vía nnya.estado_actual + legajos.fecha_cierre.
--- Ver prompts/011-fecha-egreso-nnya.md para el análisis completo.
+-- Ver plan 011 para el análisis completo.
 
 -- 1. Columna nueva
 ALTER TABLE nnya ADD COLUMN fecha_egreso DATE NULL;

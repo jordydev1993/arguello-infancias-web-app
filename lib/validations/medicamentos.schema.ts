@@ -13,7 +13,7 @@ export const medicamentoSchema = z.object({
   fecha_fin: z.string().optional().or(z.literal('')),
   observaciones: z.string().max(2000).optional().or(z.literal('')),
 }).refine(
-  // M-EX-04: también lo exige la base (chk_medicamentos_fechas, prompts/042). Fechas ISO: se comparan como texto.
+  // M-EX-04: también lo exige la base (chk_medicamentos_fechas, plan 042). Fechas ISO: se comparan como texto.
   (v) => !v.fecha_fin || v.fecha_fin >= v.fecha_inicio,
   { message: 'La fecha de fin no puede ser anterior a la de inicio (M-EX-04)', path: ['fecha_fin'] }
 )

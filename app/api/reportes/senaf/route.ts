@@ -6,7 +6,7 @@ import { iaDisponible, redactarConIA } from '@/lib/ia/redactarInformeSenaf'
 // La redacción con IA puede tardar; el resto es una consulta y un insert.
 export const maxDuration = 120
 
-// Genera una versión nueva del informe SENAF del período (prompts/027).
+// Genera una versión nueva del informe SENAF del período (plan 027).
 export async function POST(request: Request) {
   const supabase = await createClient()
 

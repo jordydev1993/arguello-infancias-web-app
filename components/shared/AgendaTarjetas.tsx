@@ -77,7 +77,7 @@ function Tarjeta({ e }: { e: EventoAgenda }) {
   )
 }
 
-// Agenda en tarjetas con la fecha grande (prompts/054): pestañas por estado, eventos
+// Agenda en tarjetas con la fecha grande (plan 054): pestañas por estado, eventos
 // ordenados por fecha y hora, cada uno enlaza al módulo donde se gestiona.
 export function AgendaTarjetas({ eventos }: { eventos: EventoAgenda[] }) {
   const ordenados = [...eventos].sort((a, b) => `${a.fecha} ${a.desde}`.localeCompare(`${b.fecha} ${b.desde}`))

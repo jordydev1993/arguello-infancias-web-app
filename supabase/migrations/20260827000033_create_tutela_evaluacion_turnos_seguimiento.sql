@@ -1,6 +1,6 @@
--- FASE A1 (AGENTS.md sección 11): 10 tablas nuevas para tutela/revinculación (1.1, 1.5),
+-- FASE A1 (el documento de arquitectura sección 11): 10 tablas nuevas para tutela/revinculación (1.1, 1.5),
 -- evaluación institucional (1.8) y acompañamiento diario (1.3).
--- Ver prompts/012-tutela-evaluacion-turnos-seguimiento.md para el análisis completo,
+-- Ver plan 012 para el análisis completo,
 -- incluyendo las 4 desviaciones respecto al prompt original documentadas ahí.
 --
 -- NO incluye triggers de auditoría (trg_audit_*): ese patrón no existe en ninguna de las

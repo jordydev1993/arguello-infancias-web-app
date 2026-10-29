@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createClient } from '@/lib/supabase/client'
 import { queryKeys } from '@/lib/constants/queryKeys'
 
-// Admin: cierra un retiro en revisión sin autorizarlo (prompts/049, decisión 3).
+// Admin: cierra un retiro en revisión sin autorizarlo (plan 049, decisión 3).
 export function useRechazarRetiro() {
   const qc = useQueryClient()
   return useMutation({

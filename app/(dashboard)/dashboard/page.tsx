@@ -14,7 +14,7 @@ import {
   alertasPorTipo, eventosProximos, cifras, intervencionesPorArea, poblacionPorMes, postEgresoPorMes,
 } from '@/lib/mocks/inicio'
 
-// Inicio (prompts/052): solo diseño, con los datos de ejemplo de lib/mocks/inicio.ts.
+// Inicio (plan 052): solo diseño, con los datos de ejemplo de lib/mocks/inicio.ts.
 // No consulta la base; conectar datos reales es un plan aparte.
 
 type Periodo = '6m' | '1a' | '2a'

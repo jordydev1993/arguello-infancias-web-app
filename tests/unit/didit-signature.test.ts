@@ -1,4 +1,4 @@
-// Tests de prompts/029: verificación de la firma X-Signature-V2 del webhook de Didit (K-01a) y ventana anti-replay (K-02).
+// Tests de plan 029: verificación de la firma X-Signature-V2 del webhook de Didit (K-01a) y ventana anti-replay (K-02).
 // Correr con: npm run test:unit
 import { test } from 'node:test'
 import assert from 'node:assert/strict'

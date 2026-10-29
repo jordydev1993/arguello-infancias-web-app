@@ -4,7 +4,7 @@ import * as React from 'react'
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import { cn } from '@/lib/utils'
 
-// Menú desplegable mínimo sobre Radix (prompts/054), con el estilo de los flotantes
+// Menú desplegable mínimo sobre Radix (plan 054), con el estilo de los flotantes
 // del sistema: borde gris, radio 10 y sombra suave.
 const DropdownMenu = DropdownMenuPrimitive.Root
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger

@@ -75,7 +75,7 @@ export function useCerrarLegajo() {
       const { data, error } = await supabase
         .from('legajos')
         .update({
-          // fecha_cierre la fija la base (trg_legajos_reglas_estado, prompts/037)
+          // fecha_cierre la fija la base (trg_legajos_reglas_estado, plan 037)
           estado: values.estado,
           motivo_cierre: values.motivo_cierre,
           updated_at: new Date().toISOString(),
@@ -95,7 +95,7 @@ export function useCerrarLegajo() {
 }
 
 // Cerrado -> archivado, 12 meses después del cierre. La base valida el plazo y que no
-// cambie ningún otro dato (trg_legajos_reglas_estado, prompts/037).
+// cambie ningún otro dato (trg_legajos_reglas_estado, plan 037).
 export function useArchivarLegajo() {
   const qc = useQueryClient()
   return useMutation({

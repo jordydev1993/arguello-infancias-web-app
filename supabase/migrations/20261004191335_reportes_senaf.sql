@@ -1,4 +1,4 @@
--- Innovación 5 (prompts/027): informe mensual institucional para SENAF.
+-- Innovación 5 (plan 027): informe mensual institucional para SENAF.
 -- Tabla reportes_senaf + RLS solo Admin + auditoría + función de agregados.
 -- La función devuelve SOLO conteos sobre columnas con dominio cerrado (CHECK):
 -- nunca nombres, DNI ni texto libre. Es lo único que viaja al proveedor de IA.
@@ -49,7 +49,7 @@ CREATE TRIGGER trg_reportes_senaf_bloquear_aprobado
   BEFORE UPDATE ON reportes_senaf
   FOR EACH ROW EXECUTE FUNCTION fn_reportes_senaf_bloquear_aprobado();
 
--- Auditoría (mismo patrón que prompts/018).
+-- Auditoría (mismo patrón que plan 018).
 CREATE TRIGGER trg_audit_reportes_senaf
   AFTER INSERT OR UPDATE OR DELETE ON reportes_senaf
   FOR EACH ROW EXECUTE FUNCTION fn_audit_trigger();

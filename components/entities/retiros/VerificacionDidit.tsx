@@ -24,14 +24,14 @@ interface VerificacionDiditProps {
   onResultado?: (code: CodigoDidit) => void
   /**
    * Última sesión del retiro o del referente: al montar se consulta su estado para
-   * mostrar el resultado sin crear otra sesión (prompts/050).
+   * mostrar el resultado sin crear otra sesión (plan 050).
    */
   sesionInicialId?: string
 }
 
 const REINTENTABLES: CodigoDidit[] = ['IDENTITY_NOT_VERIFIED', 'DNI_MISMATCH', 'PROVIDER_ERROR']
 
-// Verificación de identidad con Didit (Plan 035 §8, prompts/049): crea la sesión, muestra
+// Verificación de identidad con Didit (Plan 035 §8, plan 049): crea la sesión, muestra
 // el QR o el botón para la tablet (D-24), consulta el estado (N-6) y muestra el mensaje
 // de D-33 que devuelve la API. El resultado lo guarda el webhook; acá solo se consulta.
 export function VerificacionDidit({ objetivo, sandbox, onResultado, sesionInicialId }: VerificacionDiditProps) {
@@ -155,7 +155,7 @@ export function VerificacionDidit({ objetivo, sandbox, onResultado, sesionInicia
                 ))}
               </select>
               <span className="block text-xs text-on-surface-variant">
-                Solo en el entorno de prueba: elige qué responde Didit (prompts/045).
+                Solo en el entorno de prueba: elige qué responde Didit (plan 045).
               </span>
             </label>
           )}

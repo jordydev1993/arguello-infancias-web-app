@@ -1,4 +1,4 @@
--- prompts/039: evaluar auth.uid() y get_my_role() una vez por consulta, no por fila (advisor 0003).
+-- plan 039: evaluar auth.uid() y get_my_role() una vez por consulta, no por fila (advisor 0003).
 -- Misma lógica que las políticas vigentes; solo cambia la forma. ALTER POLICY evita que la
 -- tabla quede sin política entre un DROP y un CREATE.
 

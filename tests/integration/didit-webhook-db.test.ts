@@ -4,7 +4,7 @@ import { createHmac, randomUUID } from 'node:crypto'
 import { execFileSync } from 'node:child_process'
 import { startNextServer } from '../support/next-server.ts'
 
-// prompts/048: lógica del webhook de Didit contra Supabase LOCAL (npx supabase start).
+// plan 048: lógica del webhook de Didit contra Supabase LOCAL (npx supabase start).
 // Si Supabase local no está levantado, el test se salta. Nunca usa .env.local.
 // Datos ficticios (DNI 99…, nombres "Prueba"). El secreto es ficticio.
 

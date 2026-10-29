@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/client'
 import { queryKeys } from '@/lib/constants/queryKeys'
 import type { Retiro } from '@/types/database.types'
 
-// Retiros más recientes, con el NNyA, el tutor y sus sesiones de Didit (prompts/049).
+// Retiros más recientes, con el NNyA, el tutor y sus sesiones de Didit (plan 049).
 export function useRetiros() {
   return useQuery({
     queryKey: queryKeys.retiros.lists(),

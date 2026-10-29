@@ -38,7 +38,7 @@ function Contenido({ active, payload, label }: TooltipContentProps<number, strin
   )
 }
 
-// Líneas en un solo eje (prompts/052, skill dataviz): una sola medida, nunca dos escalas.
+// Líneas en un solo eje (plan 052): una sola medida, nunca dos escalas.
 // Leyenda arriba, guía vertical con tooltip, último punto marcado y tabla oculta para
 // lectores de pantalla.
 export function GraficoLineas<T extends object>({

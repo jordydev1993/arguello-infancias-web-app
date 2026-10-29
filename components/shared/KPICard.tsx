@@ -21,7 +21,7 @@ export interface Stat {
   href?: string
 }
 
-// Variación contra el período anterior (prompts/054): diferencia absoluta con signo,
+// Variación contra el período anterior (plan 054): diferencia absoluta con signo,
 // flecha y texto; el color sale de si el cambio es bueno o malo, nunca solo de la dirección.
 function LineaVariacion({ v }: { v: Variacion }) {
   const bueno = v.sentido === 'subir-bueno' ? v.valor > 0 : v.sentido === 'subir-malo' ? v.valor < 0 : null
@@ -41,8 +41,8 @@ function LineaVariacion({ v }: { v: Variacion }) {
   )
 }
 
-// Fila de cifras sin tarjetas (prompts/052): separadas por aire, con unidad, insignia y,
-// si la hay, la variación. Cifras proporcionales, como pide dataviz para números grandes.
+// Fila de cifras sin tarjetas (plan 052): separadas por aire, con unidad, insignia y,
+// si la hay, la variación. Cifras proporcionales para números grandes.
 export function StatRow({ stats }: { stats: Stat[] }) {
   return (
     <dl className="grid grid-cols-2 gap-x-6 gap-y-5 md:grid-cols-3 xl:grid-cols-6">

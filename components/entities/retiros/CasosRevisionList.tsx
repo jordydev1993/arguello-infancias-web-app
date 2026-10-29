@@ -28,7 +28,7 @@ function causa(r: Retiro): string | null {
   return null
 }
 
-// "Casos en revisión", solo Admin (prompts/049): verificación manual o rechazo, con motivo.
+// "Casos en revisión", solo Admin (plan 049): verificación manual o rechazo, con motivo.
 // La base es la garantía: fn_validar_fallback_retiro exige Admin y una causa habilitante.
 export function CasosRevisionList() {
   const { data: retiros, isLoading } = useRetiros()

@@ -1,4 +1,4 @@
-// Redacción del informe SENAF con Claude (prompts/027). Solo del lado del servidor:
+// Redacción del informe SENAF con Claude (plan 027). Solo del lado del servidor:
 // usa ANTHROPIC_API_KEY y nunca se importa desde componentes cliente.
 // Recibe únicamente los agregados ya validados por `agregadosSenafSchema` (R3).
 import Anthropic from '@anthropic-ai/sdk'

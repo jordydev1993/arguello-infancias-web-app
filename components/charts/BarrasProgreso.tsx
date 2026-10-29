@@ -5,7 +5,7 @@ interface BarrasProgresoProps {
   descripcion: string
 }
 
-// Barras de progreso horizontales (prompts/052): la parte de cada categoría sobre el total,
+// Barras de progreso horizontales (plan 052): la parte de cada categoría sobre el total,
 // con el porcentaje escrito; el riel es un paso más claro del mismo gris.
 export function BarrasProgreso({ datos, relleno, descripcion }: BarrasProgresoProps) {
   const total = datos.reduce((s, d) => s + d.valor, 0)

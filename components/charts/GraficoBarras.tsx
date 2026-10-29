@@ -9,7 +9,7 @@ interface GraficoBarrasProps {
   descripcion: string
 }
 
-// Barras horizontales de una sola serie (prompts/052, skill dataviz): magnitudes por
+// Barras horizontales de una sola serie (plan 052): magnitudes por
 // categoría con nombres largos, ordenadas de mayor a menor, con el valor en la punta.
 // Barras de hasta 24 px, punta redondeada de 4 px y base recta.
 export function GraficoBarras({ datos, color, unidad, descripcion }: GraficoBarrasProps) {

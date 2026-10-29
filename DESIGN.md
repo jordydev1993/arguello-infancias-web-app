@@ -104,7 +104,7 @@ components:
 
 **Creative North Star: "El panel claro"**
 
-Un panel de gestión SaaS claro y minimalista, tomado de una referencia que eligió Jordy (prompts/052). La app vive en un marco blanco redondeado sobre un fondo gris; el contenido respira, los números y los gráficos son los protagonistas y la interfaz se corre del medio. Es una herramienta de trabajo para la PC de oficina: lo que se ve primero es el dato, no la decoración.
+Un panel de gestión SaaS claro y minimalista, tomado de una referencia que eligió Jordy (plan 052). La app vive en un marco blanco redondeado sobre un fondo gris; el contenido respira, los números y los gráficos son los protagonistas y la interfaz se corre del medio. Es una herramienta de trabajo para la PC de oficina: lo que se ve primero es el dato, no la decoración.
 
 **Key Characteristics:**
 - Marco blanco de radio 12 px sobre fondo gris, con barra lateral clara y barra superior con la ruta.
@@ -128,7 +128,7 @@ Estrategia **restringida**: grises neutros más tres colores de serie que hacen 
 - **Borde** (`#e7e8ec`) y **filete** (`#eeeff2`): bordes de controles y divisiones de la grilla.
 
 ### Series de gráficos
-Azul `#3b6fe0`, rosa `#e65c9f` y verde `#0f7a47`, en ese orden fijo, más gris de contexto `#9aa0aa` para una serie de referencia. Validada con el script de la skill dataviz: banda de luminosidad, croma, separación para daltonismo en todos los pares y contraste de 3:1 sobre blanco.
+Azul `#3b6fe0`, rosa `#e65c9f` y verde `#0f7a47`, en ese orden fijo, más gris de contexto `#9aa0aa` para una serie de referencia. Validada por banda de luminosidad, croma, separación para daltonismo en todos los pares y contraste de 3:1 sobre blanco.
 
 ### Estados
 Éxito (verde), advertencia (ámbar), crítico (rojo) e info (azul claro), cada uno con su fondo claro. En las insignias el estado lo dice el texto y lo refuerza un punto de color.
@@ -203,7 +203,7 @@ Leyenda arriba (solo con 2 series o más), ejes y grilla recesivos, línea de 2 
 
 ### Do:
 - **Do** usar `PageHeader`, `Toolbar`, `StatRow` y `Panel` en cada pantalla nueva.
-- **Do** validar con dataviz cualquier paleta nueva de gráficos.
+- **Do** validar contraste y daltonismo de cualquier paleta nueva de gráficos.
 - **Do** usar una sola medida por eje: si dos series tienen escalas distintas, van en gráficos separados.
 - **Do** marcar como datos de ejemplo, con el aviso, todo dato ficticio.
 

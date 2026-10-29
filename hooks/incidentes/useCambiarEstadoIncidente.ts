@@ -8,7 +8,7 @@ interface CambiarEstadoIncidenteInput {
   id: string
   legajoId: string
   estado: Incidente['estado']
-  // Obligatorio para cerrar: la base lo exige (chk_incidente_cerrado_con_acciones, prompts/037).
+  // Obligatorio para cerrar: la base lo exige (chk_incidente_cerrado_con_acciones, plan 037).
   accionesTomadas?: string
 }
 

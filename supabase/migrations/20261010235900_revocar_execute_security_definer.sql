@@ -1,4 +1,4 @@
--- prompts/038: quitar EXECUTE a anon (y a authenticated donde no hace falta) en las funciones
+-- plan 038: quitar EXECUTE a anon (y a authenticated donde no hace falta) en las funciones
 -- SECURITY DEFINER expuestas por /rest/v1/rpc, y fijar search_path en las 2 que no lo tenían.
 -- Advisors 0028, 0029 y 0011 del 10/10/2026.
 

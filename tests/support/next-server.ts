@@ -18,7 +18,7 @@ type StartOptions = {
    */
   secret?: string
   /**
-   * Supabase LOCAL para los tests que usan la base (prompts/048). Sin esto, las
+   * Supabase LOCAL para los tests que usan la base (plan 048). Sin esto, las
    * variables de Supabase se fuerzan a cadena vacía: si solo se borraran, Next
    * tomaría las de `.env.local`, que apuntan a producción.
    */

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @plugin "tailwindcss-animate";
 
-/* Sistema SaaS claro y minimalista (prompts/052). Los nombres de token se mantienen
+/* Sistema SaaS claro y minimalista (plan 052). Los nombres de token se mantienen
    de los sistemas anteriores para no tocar cada pantalla; los valores son los nuevos. */
 @theme {
   /* Acción principal: negro */
@@ -51,7 +51,7 @@
   --color-outline-variant: #e7e8ec;
   --color-filete: #eeeff2;
 
-  /* Series de gráficos: orden fijo, validado con dataviz (CVD y contraste) */
+  /* Series de gráficos: orden fijo, validado para daltonismo y contraste */
   --color-serie-1: #3b6fe0;
   --color-serie-2: #e65c9f;
   --color-serie-3: #0f7a47;
@@ -121,7 +121,7 @@ th {
   font-variant-numeric: tabular-nums;
 }
 
-/* Autocompletado del navegador: sin el celeste por defecto (prompts/052). */
+/* Autocompletado del navegador: sin el celeste por defecto (plan 052). */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {

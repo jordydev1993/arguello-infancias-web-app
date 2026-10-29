@@ -1,8 +1,8 @@
 # Sistema de diseño — Argüello Infancias
 
-> **Reemplazado (22/10/2026):** el sistema vigente es el panel SaaS claro, documentado en [`DESIGN.md`](../DESIGN.md) (`prompts/052`, que a su vez reemplazó a la Señalética de `prompts/051`). Este archivo queda como registro histórico del sistema original ("Serene Teal").
+> **Reemplazado (22/10/2026):** el sistema vigente es el panel SaaS claro, documentado en [`DESIGN.md`](../DESIGN.md) (plan 052, que a su vez reemplazó a la Señalética de plan 051). Este archivo queda como registro histórico del sistema original ("Serene Teal").
 >
-> Catálogo del sistema de diseño **tal como estaba implementado antes de `prompts/051`**, auditado según `prompts/001-design-system.md`. No es una propuesta de rediseño: documenta lo que ya renderiza en producción, para que las próximas pantallas lo reutilicen en vez de crear estilos ad hoc.
+> Catálogo del sistema de diseño **tal como estaba implementado antes de plan 051**, auditado según plan 001. No es una propuesta de rediseño: documenta lo que ya renderiza en producción, para que las próximas pantallas lo reutilicen en vez de crear estilos ad hoc.
 
 ## 1. Tokens
 
@@ -67,7 +67,7 @@ Todas construidas con `class-variance-authority` (cva) sobre Radix UI donde apli
 
 | Componente | Resuelve | Cuándo usarlo |
 |---|---|---|
-| `KPICard` | Tarjeta de métrica con ícono, valor grande y label (`variant`: default, primary, error, secondary) | Paneles/dashboards con indicadores numéricos — ya se usa en el dashboard (hoy con el grid comentado, ver `AGENTS.md` § Deuda conocida) |
+| `KPICard` | Tarjeta de métrica con ícono, valor grande y label (`variant`: default, primary, error, secondary) | Paneles/dashboards con indicadores numéricos — ya se usa en el dashboard (hoy con el grid comentado, ver el documento de arquitectura § Deuda conocida) |
 | `DataTable<T>` | Tabla genérica tipada: columnas configurables, paginación (`pageSize`), acciones editar/eliminar/extra, estado de carga y mensaje vacío | Cualquier listado de entidad — es la base de todas las `<Entidad>Table.tsx` |
 | `ConfirmDialog` | Modal de confirmación reutilizable sobre `Dialog` + `Button`, con estado `loading` y variante `destructive`/`default` | Antes de cualquier acción irreversible (eliminar, cerrar legajo, etc.) |
 | `AccessGuard` | Oculta/muestra `children` según `role` del usuario autenticado (`context/AuthContext`) | Envolver acciones o secciones restringidas por rol (ej. gestión de Usuarios/Roles solo para Admin) |

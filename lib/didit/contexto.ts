@@ -10,9 +10,9 @@ export type ContextoDidit = {
 }
 
 /**
- * Sesión, rol y usuario para los endpoints de /api/didit/sesiones (prompts/047).
+ * Sesión, rol y usuario para los endpoints de /api/didit/sesiones (plan 047).
  * Escriben con el cliente de la sesión: RLS y los triggers deciden, y el audit log
- * registra al autor (prompts/041). Devuelve una Response si no corresponde seguir.
+ * registra al autor (plan 041). Devuelve una Response si no corresponde seguir.
  */
 export async function contextoDidit(): Promise<ContextoDidit | Response> {
   const supabase = await createClient()

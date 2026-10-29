@@ -37,7 +37,7 @@ function PropuestasBadge() {
 const enlace = 'flex min-h-9 items-center gap-2.5 rounded-md px-2.5 text-body text-on-surface-variant transition-colors hover:bg-surface-container hover:text-on-surface focus-visible:outline-2 focus-visible:-outline-offset-2'
 const enlaceActivo = 'bg-surface-container font-semibold text-on-surface'
 
-// Barra lateral clara (prompts/052): buscador y favoritos (solo diseño), Inicio y grupos
+// Barra lateral clara (plan 052): buscador y favoritos (solo diseño), Inicio y grupos
 // plegables con los mismos módulos y filtros por rol de siempre.
 function Sidebar() {
   const pathname = usePathname()
@@ -60,7 +60,7 @@ function Sidebar() {
       </div>
 
       <div className="px-3 pb-2">
-        {/* Buscador ⌘K: solo diseño (prompts/052). No busca todavía. */}
+        {/* Buscador ⌘K: solo diseño (plan 052). No busca todavía. */}
         <button
           type="button"
           disabled
@@ -146,7 +146,7 @@ function iniciales(email: string | undefined) {
   return (partes.length > 1 ? partes[0][0] + partes[1][0] : nombre.slice(0, 2)).toUpperCase()
 }
 
-// Cuenta al pie de la barra lateral (prompts/054): avatar, email y rol, con un menú que
+// Cuenta al pie de la barra lateral (plan 054): avatar, email y rol, con un menú que
 // tiene "Cerrar sesión". No se agregan opciones que el sistema no tiene.
 function Cuenta({ onSignOut }: { onSignOut: () => void }) {
   const { user, role } = useAuth()
@@ -179,7 +179,7 @@ function Cuenta({ onSignOut }: { onSignOut: () => void }) {
 }
 
 // Barra superior: dónde estás (grupo / módulo) y ayuda (solo diseño). La cuenta está al
-// pie de la barra lateral (prompts/054).
+// pie de la barra lateral (plan 054).
 function BarraSuperior() {
   const pathname = usePathname()
   const { grupo, item } = ubicacion(pathname)
@@ -202,7 +202,7 @@ function BarraSuperior() {
   )
 }
 
-// Área de contenido con scroll propio (prompts/052). Next solo reinicia el scroll de la
+// Área de contenido con scroll propio (plan 052). Next solo reinicia el scroll de la
 // ventana al navegar, así que acá se vuelve arriba en cada cambio de ruta: si no, la página
 // nueva se abría desplazada y con el encabezado (y sus botones) fuera de la vista.
 function Contenido({ children }: { children: React.ReactNode }) {
@@ -216,7 +216,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <QueryProvider>
       <AuthProvider>
-        {/* La app vive en un marco blanco redondeado sobre el fondo gris (prompts/052). */}
+        {/* La app vive en un marco blanco redondeado sobre el fondo gris (plan 052). */}
         <div className="h-screen overflow-hidden bg-surface p-3">
           <div className="flex h-full overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest">
             <Sidebar />

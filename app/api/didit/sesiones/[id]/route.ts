@@ -3,7 +3,7 @@ import { codigoSesion, fallbackHabilitado, intentosRestantes, intentosUsados, ty
 import { respuestaDidit } from '@/lib/didit/mensajes'
 import { sesionIdSchema } from '@/lib/validations/didit-sesion.schema'
 
-// Estado de una sesión de verificación (Plan 035 §7.2, prompts/047). No llama a Didit:
+// Estado de una sesión de verificación (Plan 035 §7.2, plan 047). No llama a Didit:
 // el estado lo actualiza el webhook; la pantalla consulta cada 3 a 5 s (N-6).
 export async function GET(_request: Request, { params }: { params: Promise<{ id: string }> }) {
   const ctx = await contextoDidit()

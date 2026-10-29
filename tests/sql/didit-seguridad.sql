@@ -1,4 +1,4 @@
--- Pruebas de seguridad de Didit (prompts/046): RLS, Seguridad 1 y 2, D-14, error_proveedor,
+-- Pruebas de seguridad de Didit (plan 046): RLS, Seguridad 1 y 2, D-14, error_proveedor,
 -- intentos y fallback. Solo para Supabase local: npm run test:sql.
 -- Todo corre en una transacción que termina en ROLLBACK, con datos ficticios (DNI 99…).
 -- Cada caso imprime "OK Sn" o corta con "FALLO Sn: …".

@@ -73,7 +73,7 @@ Las tarjetas de `Area = App web` son issues de este repo (`cielo-abierto`). Sale
 - **FASES B–E** — las 10 tablas nuevas (`vinculos_tutela`, `evaluacion_institucional*`, `turnos_personal`, `seguimiento_post_egreso`, etc.) están creadas con RLS pero sin UI.
 - **Audit log** — hoy no hay ningún trigger `trg_audit_*` ni la función `fn_audit_trigger()`; `audit_log` tiene 0 filas pese a que la doc dice "auditoría inmutable en cada acción".
 - **Rol rot** — 6 de 7 seed users apuntan a roles legacy y sin `auth_user_id`: si se les da login se lockean de las 27 tablas.
-- **DNI** — `AGENTS`/arquitectura afirman cifrado AES-256; `nnya.dni` y `tutores.dni` son `varchar` plano.
+- **DNI** — la arquitectura/arquitectura afirman cifrado AES-256; `nnya.dni` y `tutores.dni` son `varchar` plano.
 - **`types/database.types.ts`** — a mano, debería generarse con `supabase gen types`.
 - **Tests** — Playwright instalado, 0 tests.
 

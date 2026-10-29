@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-// INF-EX-06: a quién se dirige el informe. Debe coincidir con el CHECK de informes.destinatario (prompts/042).
+// INF-EX-06: a quién se dirige el informe. Debe coincidir con el CHECK de informes.destinatario (plan 042).
 export const DESTINATARIOS_INFORME = ['SENAF', 'Juzgado', 'Interno'] as const
 
 export const informeSchema = z.object({

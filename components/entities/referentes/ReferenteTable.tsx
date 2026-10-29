@@ -53,7 +53,7 @@ interface ReferenteTableProps {
   loading?: boolean
   onEdit?: (row: Referente) => void
   onValidarIdentidad?: (row: Referente) => void
-  /** Validación de identidad con Didit (prompts/049). */
+  /** Validación de identidad con Didit (plan 049). */
   onValidarDidit?: (row: Referente) => void
 }
 

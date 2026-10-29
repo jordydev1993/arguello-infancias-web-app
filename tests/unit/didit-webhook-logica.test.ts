@@ -1,4 +1,4 @@
-// Tests de prompts/048: lógica del webhook de Didit. Qué se lee del payload (D-28),
+// Tests de plan 048: lógica del webhook de Didit. Qué se lee del payload (D-28),
 // cómo se actualiza la sesión (D-1, D-12, D-14, idempotencia) y la validación
 // RENAPER (D-11). Correr con: npm run test:unit. Datos ficticios.
 import { test } from 'node:test'

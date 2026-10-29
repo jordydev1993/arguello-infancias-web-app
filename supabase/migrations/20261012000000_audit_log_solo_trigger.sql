@@ -1,4 +1,4 @@
--- prompts/040: audit_log solo lo escribe fn_audit_trigger().
+-- plan 040: audit_log solo lo escribe fn_audit_trigger().
 -- La política audit_log_system_insert (TO public, WITH CHECK true) y los privilegios por
 -- defecto de Supabase dejaban insertar filas falsas con la clave anon (hallazgo del 11/10).
 -- fn_audit_trigger es SECURITY DEFINER y corre como postgres, dueño de la tabla: sin

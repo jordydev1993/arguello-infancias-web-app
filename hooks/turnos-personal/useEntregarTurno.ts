@@ -7,7 +7,7 @@ import type { EntregaTurnoFormValues } from '@/lib/validations/entrega-turno.sch
 /**
  * Solo setea la mitad del titular (entregado_por/entregado_at/novedades_traspaso).
  * Nunca recibe ni acepta un `usuarioId` distinto del que llama, ni toca recibido_*
- * — ver prompts/013 y prompts/023 sobre por qué esa separación es la que hace real
+ * — ver plan 013 y plan 023 sobre por qué esa separación es la que hace real
  * la firma doble (RLS por sí sola no puede validar que el receptor sea otra persona).
  */
 export function useEntregarTurno() {

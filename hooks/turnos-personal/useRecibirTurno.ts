@@ -5,7 +5,7 @@ import { queryKeys } from '@/lib/constants/queryKeys'
 
 /**
  * Solo setea la mitad del receptor (recibido_por/recibido_at). Nunca acepta un
- * `usuarioId` distinto del que llama — ver prompts/013 y prompts/023.
+ * `usuarioId` distinto del que llama — ver plan 013 y plan 023.
  */
 export function useRecibirTurno() {
   const qc = useQueryClient()

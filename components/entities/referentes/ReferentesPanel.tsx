@@ -17,7 +17,7 @@ import type { Referente } from '@/types/database.types'
 import type { ValidacionRenaperFormValues } from '@/lib/validations/validaciones-renaper.schema'
 
 // Contenido de /referentes. La página es de servidor para decidir si se muestra el
-// selector de escenario de sandbox (prompts/049, decisión 6).
+// selector de escenario de sandbox (plan 049, decisión 6).
 export function ReferentesPanel({ sandbox }: { sandbox: boolean }) {
   const router = useRouter()
   const { data: referentes = [], isLoading } = useReferentes()

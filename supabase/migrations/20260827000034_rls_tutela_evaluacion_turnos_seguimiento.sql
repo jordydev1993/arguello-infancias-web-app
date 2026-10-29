@@ -1,5 +1,5 @@
--- FASE A2 (AGENTS.md sección 11): políticas RLS para las 10 tablas de A1.
--- Ver prompts/013-rls-tutela-evaluacion-turnos-seguimiento.md para el análisis completo.
+-- FASE A2 (el documento de arquitectura sección 11): políticas RLS para las 10 tablas de A1.
+-- Ver plan 013 para el análisis completo.
 -- Patrón copiado de "intervenciones_admin_tecnico_all" (clean_schema.sql), abierto en
 -- políticas por operación porque la matriz pide reglas distintas por operación.
 

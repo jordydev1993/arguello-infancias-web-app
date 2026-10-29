@@ -15,7 +15,7 @@ labels: ""
 
 ## Definición de terminado
 
-- [ ] Plan en `prompts/NNN-*.md` aprobado por Jordy antes de implementar
+- [ ] Plan aprobado por Jordy en este issue antes de implementar
 - [ ] `npm run lint` y `npm run build` limpios (y `npx tsc --noEmit` si se tocaron tipos)
 - [ ] Permisos verificados por rol (RLS) si toca datos
 - [ ] PR con `Closes #<este issue>` y cómo probarlo a mano

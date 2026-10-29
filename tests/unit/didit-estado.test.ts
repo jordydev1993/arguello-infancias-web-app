@@ -1,4 +1,4 @@
-// Tests de prompts/047: intentos (D-3, D-12, D-14), sesión abierta (D-27), fallback
+// Tests de plan 047: intentos (D-3, D-12, D-14), sesión abierta (D-27), fallback
 // (D-2, D-20, D-26) y códigos de §7.4 con los mensajes de D-33. Correr con: npm run test:unit
 import { test } from 'node:test'
 import assert from 'node:assert/strict'

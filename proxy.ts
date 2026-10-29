@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 
 export async function proxy(request: NextRequest) {
   // El webhook de Didit se autentica con firma HMAC (X-Signature-V2), no con sesión de
-  // Supabase: no necesita el cliente ni el redirect (prompts/016, 032). Sale antes de
+  // Supabase: no necesita el cliente ni el redirect (plan 016, 032). Sale antes de
   // crear el cliente para no depender de las variables de Supabase.
   if (request.nextUrl.pathname === '/api/didit/webhook') {
     return NextResponse.next()

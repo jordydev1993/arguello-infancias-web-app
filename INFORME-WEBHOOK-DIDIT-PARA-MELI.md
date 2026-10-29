@@ -1,7 +1,7 @@
 # Informe: webhook de Didit — qué quedó armado y qué falta (para Meli)
 
 **Fecha:** 2026-09-13
-**Plan:** `prompts/016-webhook-didit.md` (✓ Aprobado por Jordy)
+**Plan:** plan 016 (✓ Aprobado por Jordy)
 
 ---
 

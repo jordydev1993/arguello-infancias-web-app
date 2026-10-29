@@ -1,4 +1,4 @@
-// Tests de prompts/049: campos obligatorios del retiro con los mensajes D y E de la
+// Tests de plan 049: campos obligatorios del retiro con los mensajes D y E de la
 // Práctica 3 §6 (D-33), y la autorización de retiro. Correr con: npm run test:unit
 import { test } from 'node:test'
 import assert from 'node:assert/strict'

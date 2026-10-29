@@ -1,4 +1,4 @@
-// Cliente HTTP de Didit, solo del lado del servidor (prompts/047).
+// Cliente HTTP de Didit, solo del lado del servidor (plan 047).
 // API: https://docs.didit.me/sessions-api/create-session. La API key nunca sale del servidor.
 // No lanza excepciones: devuelve un resultado tipado, y cualquier falla del proveedor
 // termina en "Error del proveedor" (RNF-13). No loguea el DNI ni la respuesta de Didit.
@@ -6,7 +6,7 @@ import { z } from 'zod'
 
 export const DIDIT_API_BASE = 'https://verification.didit.me'
 
-/** Escenarios de sandbox permitidos (prompts/045, Supuesto 5). */
+/** Escenarios de sandbox permitidos (plan 045, Supuesto 5). */
 export const SANDBOX_SCENARIOS = [
   'approve',
   'lookup_no_match',
@@ -107,7 +107,7 @@ export async function crearSesionDidit(
 }
 
 /**
- * Borra la sesión en Didit, con sus imágenes y la selfie (RF-10, prompts/048).
+ * Borra la sesión en Didit, con sus imágenes y la selfie (RF-10, plan 048).
  * Un 404 cuenta como éxito: la sesión ya no existe. Un 503 se reintenta una vez.
  */
 export async function borrarSesionDidit(

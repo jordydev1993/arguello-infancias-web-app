@@ -9,7 +9,7 @@ interface PageHeaderProps {
   className?: string
 }
 
-// Encabezado de página (prompts/052): título, descripción opcional y acciones a la derecha.
+// Encabezado de página (plan 052): título, descripción opcional y acciones a la derecha.
 export function PageHeader({ title, description, actions, className }: PageHeaderProps) {
   return (
     <div className={cn('flex flex-wrap items-start justify-between gap-4', className)}>

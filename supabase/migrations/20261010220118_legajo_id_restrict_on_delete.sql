@@ -1,6 +1,6 @@
--- prompts/036: ON DELETE CASCADE -> RESTRICT en las FKs que borraban historia del caso.
+-- plan 036: ON DELETE CASCADE -> RESTRICT en las FKs que borraban historia del caso.
 -- Borrar un legajo no debe llevarse sus turnos, diagnósticos, medicamentos, informes,
--- documentos ni audiencias (mismo criterio que prompts/025 y que incidentes.legajo_id en
+-- documentos ni audiencias (mismo criterio que plan 025 y que incidentes.legajo_id en
 -- 20261003193718). Tampoco borrar un referente debe llevarse su evidencia RENAPER, ni
 -- borrar un tutor debe llevarse sus vínculos con NNyA. Ningún hook borra legajos ni
 -- referentes. Sí existe useDeleteTutor: un tutor con NNyA asignados ya no se puede eliminar

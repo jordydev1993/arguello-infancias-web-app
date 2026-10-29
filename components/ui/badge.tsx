@@ -3,7 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const badgeVariants = cva(
-  // Pastilla neutra con un punto de color por estado (prompts/052): el texto dice el
+  // Pastilla neutra con un punto de color por estado (plan 052): el texto dice el
   // estado y el punto lo refuerza; el color nunca es el único canal.
   'inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-outline-variant bg-surface-container-lowest px-2 py-0.5 text-caption font-medium text-on-surface transition-colors before:h-1.5 before:w-1.5 before:shrink-0 before:rounded-full before:content-[""]',
   {

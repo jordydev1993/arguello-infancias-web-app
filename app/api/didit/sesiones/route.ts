@@ -5,7 +5,7 @@ import { ESTADOS_ABIERTOS, intentosRestantes, intentosUsados, sesionAbierta, typ
 import { respuestaDidit } from '@/lib/didit/mensajes'
 import { crearSesionDiditSchema } from '@/lib/validations/didit-sesion.schema'
 
-// Crear una sesión de verificación de identidad en Didit (Plan 035 §7.1, prompts/047).
+// Crear una sesión de verificación de identidad en Didit (Plan 035 §7.1, plan 047).
 export async function POST(request: Request) {
   const ctx = await contextoDidit()
   if (ctx instanceof Response) return ctx

@@ -105,7 +105,7 @@ export default function IncidentesPage() {
         />
       </div>
 
-      {/* Gráficos (prompts/052): barras por tipo y parte de cada gravedad sobre el total. */}
+      {/* Gráficos (plan 052): barras por tipo y parte de cada gravedad sobre el total. */}
       {incidentes.length > 0 && (
         <div className="grid grid-cols-1 divide-y divide-filete border-b border-filete md:grid-cols-2 md:divide-x md:divide-y-0">
           <Panel title="Por tipo" className="pb-6 md:pr-6">

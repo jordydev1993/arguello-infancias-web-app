@@ -4,7 +4,7 @@ import { z } from 'zod'
 export const MENSAJE_CAMPOS_OBLIGATORIOS = 'Complete los campos obligatorios para registrar el retiro.'
 export const MENSAJE_HORA_FIN = 'Debe ingresar la hora de finalización para completar el retiro.'
 
-// Paso 1 (prompts/049, decisión 2): el NNyA y el tutor con autorización vigente.
+// Paso 1 (plan 049, decisión 2): el NNyA y el tutor con autorización vigente.
 export const iniciarRetiroSchema = z.object({
   nnya_id: z.string().min(1, MENSAJE_CAMPOS_OBLIGATORIOS),
   autorizacion_retiro_id: z.string().min(1, MENSAJE_CAMPOS_OBLIGATORIOS),
@@ -26,7 +26,7 @@ export const cerrarRetiroSchema = z.object({
 })
 export type CerrarRetiroValues = z.infer<typeof cerrarRetiroSchema>
 
-// Admin: rechazar un retiro en revisión (prompts/049, decisión 3) o aplicar el fallback.
+// Admin: rechazar un retiro en revisión (plan 049, decisión 3) o aplicar el fallback.
 export const motivoAdminSchema = z.object({
   motivo: z.string().trim().min(1, 'El motivo es obligatorio.').max(500),
 })

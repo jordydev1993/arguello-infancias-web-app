@@ -1,4 +1,4 @@
--- prompts/046: D-14 en la base (dni_coincide), error_proveedor con valores cerrados
+-- plan 046: D-14 en la base (dni_coincide), error_proveedor con valores cerrados
 -- y conteos de intentos sobre estado_rnf12.
 --
 -- Didit no rechaza una sesión cuando el DNI presentado no es el esperado: solo genera una
