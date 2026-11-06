@@ -27,11 +27,11 @@ export default function NnyaPage() {
     : nnyas
 
   return (
-    <div className="px-8 py-6 space-y-6">
+    <div className="p-6 space-y-5">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-title font-semibold text-on-surface">NNyA</h1>
-          <p className="text-sm text-on-surface-variant">{nnyas.length} registros</p>
+          <h1 className="text-xl font-semibold text-slate-900">NNyA</h1>
+          <p className="text-sm text-slate-500">{nnyas.length} registros</p>
         </div>
         <AccessGuard roles={['Admin', 'Equipo Tecnico']}>
           <Button onClick={() => router.push('/nnya/nuevo')}>
@@ -42,7 +42,7 @@ export default function NnyaPage() {
       </div>
 
       <div className="relative max-w-sm">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-outline" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
         <Input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -52,7 +52,7 @@ export default function NnyaPage() {
       </div>
 
       {isError && (
-        <div className="rounded-md border border-error/30 bg-error-container px-4 py-3 text-sm text-error">
+        <div className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
           Error al cargar NNyA:{' '}
           {error instanceof Error ? error.message : String(error)}
         </div>

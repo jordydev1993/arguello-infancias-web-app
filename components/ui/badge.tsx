@@ -3,19 +3,17 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const badgeVariants = cva(
-  // Pastilla neutra con un punto de color por estado (plan 052): el texto dice el
-  // estado y el punto lo refuerza; el color nunca es el único canal.
-  'inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-outline-variant bg-surface-container-lowest px-2 py-0.5 text-caption font-medium text-on-surface transition-colors before:h-1.5 before:w-1.5 before:shrink-0 before:rounded-full before:content-[""]',
+  'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors',
   {
     variants: {
       variant: {
-        default: 'before:bg-ink',
-        secondary: 'before:bg-serie-contexto',
-        destructive: 'before:bg-error',
-        outline: 'text-on-surface-variant before:hidden',
-        success: 'before:bg-exito',
-        warning: 'before:bg-tertiary',
-        info: 'before:bg-serie-1',
+        default: 'border-transparent bg-primary text-on-primary',
+        secondary: 'border-transparent bg-secondary-container text-on-secondary-container',
+        destructive: 'border-transparent bg-error-container text-on-error-container',
+        outline: 'border-outline-variant text-on-surface-variant',
+        success: 'border-transparent bg-primary-fixed text-on-primary-container',
+        warning: 'border-transparent bg-tertiary-fixed text-tertiary',
+        info: 'border-transparent bg-secondary-container text-on-secondary-container',
       },
     },
     defaultVariants: {

@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { AccessGuard } from '@/components/shared/AccessGuard'
-import { useAuth } from '@/context/AuthContext'
 import { VinculoTutelaList } from '@/components/entities/vinculos-tutela/VinculoTutelaList'
 import { VinculoTutelaForm } from '@/components/entities/vinculos-tutela/VinculoTutelaForm'
 import { TransferenciaAuhForm } from '@/components/entities/transferencia-auh/TransferenciaAuhForm'
@@ -13,7 +12,6 @@ import { useVinculosTutelaByNnya } from '@/hooks/vinculos-tutela/useVinculosTute
 import { useCreateVinculoTutela } from '@/hooks/vinculos-tutela/useCreateVinculoTutela'
 import { useUpdateVinculoTutela } from '@/hooks/vinculos-tutela/useUpdateVinculoTutela'
 import { toast } from '@/components/ui/toaster'
-import { mensajeError } from '@/components/entities/retiros/mensajeError'
 import type { VinculoTutela } from '@/types/database.types'
 import type { VinculoTutelaFormValues } from '@/lib/validations/vinculos-tutela.schema'
 
@@ -23,7 +21,6 @@ interface TutelaTabProps {
 }
 
 export function TutelaTab({ nnyaId, legajoActivo }: TutelaTabProps) {
-  const { role } = useAuth()
   const { data: vinculos = [], isLoading } = useVinculosTutelaByNnya(nnyaId)
   const crear = useCreateVinculoTutela()
   const actualizar = useUpdateVinculoTutela()
@@ -43,10 +40,8 @@ export function TutelaTab({ nnyaId, legajoActivo }: TutelaTabProps) {
       }
       setOpen(false)
       setEditando(null)
-    } catch (e: unknown) {
-      // El trigger de D-16 ya responde en español ("No se puede activar el vínculo: el
-      // referente no tiene una validación RENAPER aprobada"): se muestra tal cual.
-      toast({ title: 'Error al guardar', description: mensajeError(e), variant: 'destructive' })
+    } catch (e: any) {
+      toast({ title: 'Error al guardar', description: e.message, variant: 'destructive' })
     }
   }
 
@@ -63,12 +58,11 @@ export function TutelaTab({ nnyaId, legajoActivo }: TutelaTabProps) {
       )}
 
       {isLoading ? (
-        <p className="text-sm text-outline py-4 text-center">Cargando...</p>
+        <p className="text-sm text-slate-400 py-4 text-center">Cargando...</p>
       ) : (
         <VinculoTutelaList
           vinculos={vinculos}
-          // Solo Admin: vinculos_tutela_update_admin rechaza el guardado de otros roles (plan 050).
-          onEdit={legajoActivo && role === 'Admin' ? (v) => { setEditando(v); setOpen(true) } : undefined}
+          onEdit={legajoActivo ? (v) => { setEditando(v); setOpen(true) } : undefined}
         />
       )}
 

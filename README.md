@@ -7,8 +7,9 @@ físicos fragmentados por un sistema trazable, con alertas sobre eventos crític
 El complemento móvil vive en el repo `arguello-infancias-mobile` y comparte la misma base
 de datos.
 
-La planificación del proyecto (sprints, Gantt y asignación del equipo) está en
-[`docs/gestion/`](./docs/gestion/). Este README es para levantar el entorno local.
+**La fuente de verdad del proyecto es [`AGENTS-WEB.md`](./AGENTS-WEB.md)** — arquitectura,
+modelo de datos, roles, seguridad, roadmap y deuda conocida. Este README es solo para
+levantar el entorno local.
 
 ## Stack
 
@@ -50,12 +51,8 @@ La planificación del proyecto (sprints, Gantt y asignación del equipo) está e
 |---|---|---|
 | `NEXT_PUBLIC_SUPABASE_URL` | Cliente y servidor | URL del proyecto Supabase. Pública. |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Cliente y servidor | Clave anónima de Supabase. Pública, protegida por RLS. |
-| `SUPABASE_SERVICE_ROLE_KEY` | `app/api/usuarios/route.ts` y `app/api/didit/webhook/route.ts` (server-only, vía `lib/supabase/admin.ts` en el webhook) | **Nunca** exponer al cliente. Crea usuarios como Admin y deja que el webhook de Didit, que no tiene sesión de usuario, guarde el resultado. |
+| `SUPABASE_SERVICE_ROLE_KEY` | `app/api/usuarios/route.ts` (server-only) | **Nunca** exponer al cliente. Se usa solo para crear usuarios como Admin. |
 | `DIDIT_WEBHOOK_SECRET` | `app/api/didit/webhook/route.ts` (server-only) | Verifica la firma HMAC del webhook de Didit (validación RENAPER). |
-| `DIDIT_API_KEY` | `app/api/didit/sesiones` (server-only) | API key de la app de Didit (hoy, la de sandbox). Crea y consulta sesiones de verificación. |
-| `DIDIT_WORKFLOW_ID` | `app/api/didit/sesiones` (server-only) | Workflow de Didit (`id_lookup` contra RENAPER, D-23). |
-| `DIDIT_SANDBOX_SCENARIOS` | `app/api/didit/sesiones` (server-only) | **Solo local y preview, con la app de sandbox.** El preview de Vercel no está configurado (22/10): no hay una segunda base de Supabase. En `true`, deja elegir el resultado de Didit con `sandbox_scenario` para la QA (`prompts/045`). Nunca en producción. |
-| `ANTHROPIC_API_KEY` | `lib/ia/redactarInformeSenaf.ts` (server-only) | **Opcional.** Si está, el borrador del informe SENAF se redacta con Claude; si no, con la plantilla. Cuenta de la Console de Anthropic (pago por uso, aparte de cualquier suscripción). **Nunca** con prefijo `NEXT_PUBLIC_`. |
 
 ## Scripts
 
@@ -65,10 +62,9 @@ La planificación del proyecto (sprints, Gantt y asignación del equipo) está e
 | `npm run build` | Build de producción |
 | `npm run start` | Sirve el build de producción |
 | `npm run lint` | ESLint |
-| `npm run test:unit` | Tests unitarios con el runner de Node (`tests/unit/`), sin dependencias extra |
 
 Antes de dar por terminada una tarea: `npm run lint`, `npm run build`, y `npx tsc --noEmit`
-si se tocaron tipos.
+si se tocaron tipos (ver flujo de trabajo completo en `AGENTS-WEB.md`).
 
 ## Base de datos
 
@@ -76,21 +72,6 @@ El schema vive en `supabase/migrations/` — es la fuente de verdad, no solo el 
 remoto. `supabase/migrations/20260620000031_clean_schema.sql` es la definición de schema
 **vigente** ("reemplaza las migraciones 001-030 en una DB nueva"); ante cualquier duda
 sobre una columna, ese archivo manda por sobre migraciones individuales más viejas.
-Las migraciones 001-030 quedaron sin contenido (solo un comentario): fallaban en una base
-vacía y se conservan para el historial de producción, donde ya están aplicadas.
-
-### Supabase local (para probar migraciones)
-
-Requiere Docker Desktop corriendo. La configuración está en `supabase/config.toml`.
-
-```bash
-npx supabase start      # levanta la base local y aplica todas las migraciones
-npx supabase db reset   # vuelve a crear la base desde cero
-npx supabase stop       # la frena
-```
-
-`start` muestra la URL y las claves locales. Para usarlas en la app, cargarlas en
-`.env.local`; nunca usar la base de producción para pruebas.
 
 Los tipos de dominio en `types/database.types.ts` se derivan de
 `types/database.generated.ts` (generado con `supabase gen types` / el MCP de Supabase, no
@@ -98,7 +79,7 @@ se edita a mano).
 
 ## Estructura
 
-Capas y convenciones:
+Ver `AGENTS-WEB.md` § Arquitectura para el detalle completo de capas y convenciones. Resumen:
 
 ```
 components/ui/            primitivas (shadcn/Radix)
@@ -107,5 +88,5 @@ components/legajos/tabs/  sub-tabs del detalle de legajo
 hooks/<entidad>/          un hook useQuery/useMutation por operación
 lib/validations/*.schema.ts  un schema zod por entidad
 supabase/migrations/      migraciones SQL — fuente de verdad del schema
-docs/gestion/             planificación Scrum: sprints, Gantt y carga del equipo
+prompts/                  historial de planes de implementación (Vibe Engineering + SDD)
 ```

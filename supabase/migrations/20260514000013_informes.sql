@@ -1,4 +1,16 @@
--- Reemplazada por 20260620000031_clean_schema.sql, que define el esquema completo en una base nueva.
--- Esta migración era del esquema anterior (por ejemplo, usuarios.id_usuario) y fallaba en una base vacía.
--- Se conserva sin contenido para el historial de producción, donde ya está aplicada (Supabase registra
--- las migraciones por versión). El contenido original está en el historial de git.
+-- Informes: documentos técnicos elaborados por el equipo
+CREATE TABLE IF NOT EXISTS informes (
+  id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  nnya_id       UUID NOT NULL REFERENCES nnya(id) ON DELETE CASCADE,
+  tipo          VARCHAR(50) NOT NULL,
+  titulo        VARCHAR(200) NOT NULL,
+  contenido     TEXT NOT NULL,
+  elaborado_por UUID REFERENCES usuarios(id) ON DELETE SET NULL,
+  fecha_informe DATE NOT NULL DEFAULT CURRENT_DATE,
+  estado        VARCHAR(30) NOT NULL DEFAULT 'borrador'
+                CHECK (estado IN ('borrador', 'revisado', 'finalizado')),
+  created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_informes_nnya ON informes(nnya_id);

@@ -15,7 +15,7 @@ export function useActualizarDiagnostico() {
     mutationFn: async ({ id, estado }: ActualizarDiagnosticoInput) => {
       const supabase = createClient()
 
-      // Máquina de estados del diagnóstico: resuelto es terminal
+      // DGN-EX-05: el estado resuelto es terminal
       const { data: diag } = await supabase
         .from('diagnosticos')
         .select('estado')
@@ -24,7 +24,7 @@ export function useActualizarDiagnostico() {
 
       if (diag?.estado === 'resuelto') {
         throw new Error(
-          'El diagnóstico ya está resuelto. Si hay una recaída, registrá un nuevo diagnóstico.'
+          'El diagnóstico ya está resuelto. Si hay una recaída, registrá un nuevo diagnóstico. (DGN-EX-05)'
         )
       }
 
