@@ -39,7 +39,7 @@ function isProxima(alerta: Alerta): boolean {
 
 function PrioridadBadge({ prioridad }: { prioridad: Alerta['prioridad'] }) {
   if (prioridad === 'critica') return <Badge variant="destructive">Crítica</Badge>
-  if (prioridad === 'alta') return <Badge className="bg-tertiary-fixed text-on-tertiary-fixed border border-tertiary/30">Alta</Badge>
+  if (prioridad === 'alta') return <Badge className="bg-orange-100 text-orange-700 border border-orange-200">Alta</Badge>
   if (prioridad === 'media') return <Badge variant="outline">Media</Badge>
   return <Badge variant="secondary">Baja</Badge>
 }
@@ -48,7 +48,7 @@ function EstadoBadge({ alerta }: { alerta: Alerta }) {
   const vencida = isVencida(alerta)
   if (alerta.estado === 'completada') return <Badge variant="success">Completada</Badge>
   if (vencida || alerta.estado === 'vencida') return <Badge variant="destructive">Vencida</Badge>
-  if (alerta.estado === 'en_proceso') return <Badge className="bg-primary-container text-on-primary-container border border-serie-1/30">En proceso</Badge>
+  if (alerta.estado === 'en_proceso') return <Badge className="bg-blue-100 text-blue-700 border border-blue-200">En proceso</Badge>
   return <Badge variant="secondary">Pendiente</Badge>
 }
 
@@ -81,12 +81,8 @@ function ResolverModal({ alerta, onClose }: ResolverModalProps) {
       await resolver.mutateAsync({ id: alerta.id, observacion: observacion.trim() })
       toast({ title: 'Alerta resuelta', variant: 'success' })
       handleClose()
-    } catch (error: unknown) {
-      toast({
-        title: 'Error al resolver',
-        description: error instanceof Error ? error.message : 'Ocurrió un error desconocido al resolver la alerta.',
-        variant: 'destructive',
-      })
+    } catch (e: any) {
+      toast({ title: 'Error al resolver', description: e.message, variant: 'destructive' })
     }
   }
 
@@ -98,30 +94,30 @@ function ResolverModal({ alerta, onClose }: ResolverModalProps) {
         </DialogHeader>
         {alerta && (
           <div className="space-y-4 pt-1">
-            <div className="bg-surface-container-low rounded-lg p-3 space-y-1 text-sm">
-              <p className="font-medium text-on-surface">{alerta.titulo}</p>
+            <div className="bg-slate-50 rounded-lg p-3 space-y-1 text-sm">
+              <p className="font-medium text-slate-900">{alerta.titulo}</p>
               {alerta.nnya && (
-                <p className="text-on-surface-variant">NNyA: {alerta.nnya.apellido}, {alerta.nnya.nombre}</p>
+                <p className="text-slate-500">NNyA: {alerta.nnya.apellido}, {alerta.nnya.nombre}</p>
               )}
               <div className="flex items-center gap-2 pt-1">
                 <PrioridadBadge prioridad={alerta.prioridad} />
                 <EstadoBadge alerta={alerta} />
                 {alerta.fecha_vencimiento && (
-                  <span className="text-xs text-outline">
+                  <span className="text-xs text-slate-400">
                     Vence: {format(new Date(alerta.fecha_vencimiento + 'T00:00:00'), 'dd/MM/yyyy', { locale: es })}
                   </span>
                 )}
               </div>
               {alerta.descripcion && (
-                <p className="text-on-surface-variant mt-2 text-xs leading-relaxed">{alerta.descripcion}</p>
+                <p className="text-slate-600 mt-2 text-xs leading-relaxed">{alerta.descripcion}</p>
               )}
             </div>
             <div>
-              <label className="text-sm font-medium text-on-surface-variant mb-1.5 block">
+              <label className="text-sm font-medium text-slate-700 mb-1.5 block">
                 Observación de cierre{' '}
                 {requiereObservacion
-                  ? <span className="text-error">*</span>
-                  : <span className="text-outline">(opcional)</span>}
+                  ? <span className="text-red-500">*</span>
+                  : <span className="text-slate-400">(opcional)</span>}
               </label>
               <Textarea
                 value={observacion}
@@ -134,7 +130,7 @@ function ResolverModal({ alerta, onClose }: ResolverModalProps) {
                 }
               />
               {requiereObservacion && (
-                <p className="text-xs text-tertiary mt-1">
+                <p className="text-xs text-amber-600 mt-1">
                   Las alertas de prioridad alta o crítica requieren documentar las acciones tomadas.
                 </p>
               )}
@@ -175,12 +171,8 @@ export default function AlertasPage() {
     try {
       await procesar.mutateAsync(alerta.id)
       toast({ title: 'Alerta puesta en proceso', variant: 'success' })
-    } catch (error: unknown) {
-      toast({
-        title: 'Error',
-        description: error instanceof Error ? error.message : 'Ocurrió un error desconocido al procesar la alerta.',
-        variant: 'destructive',
-      })
+    } catch (e: any) {
+      toast({ title: 'Error', description: e.message, variant: 'destructive' })
     }
   }
 
@@ -214,46 +206,44 @@ export default function AlertasPage() {
   const vencidasCount = alertas.filter((a) => isVencida(a) || a.estado === 'vencida').length
 
   return (
-    <div className="px-8 py-6 space-y-6">
+    <div className="p-6 max-w-3xl space-y-6">
       {/* Header */}
       <div>
         <div className="flex items-center gap-3 mb-1 flex-wrap">
-          <h1 className="text-title font-semibold text-on-surface">Alertas</h1>
+          <h1 className="text-xl font-semibold text-slate-900">Alertas</h1>
           {pendientesCount > 0 && (
-            <span className="bg-error-container text-error text-xs font-semibold px-2 py-0.5 rounded-full">
+            <span className="bg-red-100 text-red-700 text-xs font-semibold px-2 py-0.5 rounded-full">
               {pendientesCount} pendiente{pendientesCount !== 1 ? 's' : ''}
             </span>
           )}
           {enProcesoCount > 0 && (
-            <span className="bg-primary-container text-on-primary-container text-xs font-semibold px-2 py-0.5 rounded-full">
+            <span className="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-0.5 rounded-full">
               {enProcesoCount} en proceso
             </span>
           )}
           {vencidasCount > 0 && (
-            <span className="bg-error text-white text-xs font-semibold px-2 py-0.5 rounded-full">
+            <span className="bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full">
               {vencidasCount} vencida{vencidasCount !== 1 ? 's' : ''}
             </span>
           )}
         </div>
-        <p className="text-sm text-on-surface-variant">
+        <p className="text-sm text-slate-500">
           Seguimiento de alertas generadas automáticamente por incidentes graves o críticos.
         </p>
       </div>
 
       {/* Filtros */}
       <div className="space-y-3">
-        <div role="tablist" aria-label="Estado" className="flex flex-wrap gap-5 border-b border-filete">
+        <div className="flex gap-1 bg-slate-100 p-1 rounded-lg w-fit flex-wrap">
           {ESTADO_TABS.map(({ value, label }) => (
             <button
               key={value}
-              role="tab"
-              aria-selected={filtroEstado === value}
               onClick={() => setFiltroEstado(value)}
               className={cn(
-                '-mb-px border-b-2 pb-2.5 pt-1 text-body font-medium transition-colors focus-visible:outline-2',
+                'px-3 py-1.5 rounded-md text-sm font-medium transition-colors',
                 filtroEstado === value
-                  ? 'border-ink text-on-surface'
-                  : 'border-transparent text-outline hover:text-on-surface'
+                  ? 'bg-white text-slate-900 shadow-sm'
+                  : 'text-slate-500 hover:text-slate-700'
               )}
             >
               {label}
@@ -275,13 +265,13 @@ export default function AlertasPage() {
             </SelectContent>
           </Select>
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-outline" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <input
               type="text"
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
               placeholder="Buscar por título, descripción o NNyA..."
-              className="w-full pl-9 pr-3 py-2 text-sm border border-outline-variant rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
+              className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
             />
           </div>
         </div>
@@ -289,14 +279,14 @@ export default function AlertasPage() {
 
       {/* Lista */}
       {isLoading ? (
-        <p className="text-sm text-outline py-8 text-center">Cargando alertas...</p>
+        <p className="text-sm text-slate-400 py-8 text-center">Cargando alertas...</p>
       ) : alertasFiltradas.length === 0 ? (
         <div className="py-12 text-center">
-          <AlertTriangle className="h-8 w-8 text-outline mx-auto mb-2" />
-          <p className="text-sm text-outline">No hay alertas que coincidan con los filtros</p>
+          <AlertTriangle className="h-8 w-8 text-slate-300 mx-auto mb-2" />
+          <p className="text-sm text-slate-400">No hay alertas que coincidan con los filtros</p>
         </div>
       ) : (
-        <div className="divide-y divide-outline-variant border border-outline-variant rounded-lg overflow-hidden">
+        <div className="divide-y divide-slate-100 border border-slate-100 rounded-lg overflow-hidden">
           {alertasFiltradas.map((alerta) => {
             const proxima = isProxima(alerta)
             const vencida = isVencida(alerta)
@@ -307,10 +297,10 @@ export default function AlertasPage() {
               <div
                 key={alerta.id}
                 className={cn(
-                  'p-4 bg-surface-container-lowest',
-                  proxima && 'bg-tertiary-fixed',
-                  vencida && 'bg-error-container',
-                  enProceso && 'bg-primary-container',
+                  'p-4 bg-white',
+                  proxima && 'bg-amber-50',
+                  vencida && 'bg-red-50',
+                  enProceso && 'bg-blue-50',
                   resuelta && 'opacity-60',
                 )}
               >
@@ -318,13 +308,13 @@ export default function AlertasPage() {
                   <div className="flex-1 min-w-0 space-y-1.5">
                     <div className="flex items-center gap-2 flex-wrap">
                       {(proxima || vencida) && (
-                        <AlertTriangle className={cn('h-3.5 w-3.5 shrink-0', vencida ? 'text-error' : 'text-tertiary')} />
+                        <AlertTriangle className={cn('h-3.5 w-3.5 shrink-0', vencida ? 'text-red-500' : 'text-amber-500')} />
                       )}
-                      <span className="text-sm font-medium text-on-surface">{alerta.titulo}</span>
+                      <span className="text-sm font-medium text-slate-900">{alerta.titulo}</span>
                     </div>
 
                     {alerta.nnya && (
-                      <p className="text-xs text-on-surface-variant">
+                      <p className="text-xs text-slate-500">
                         NNyA: <span className="font-medium">{alerta.nnya.apellido}, {alerta.nnya.nombre}</span>
                       </p>
                     )}
@@ -333,7 +323,7 @@ export default function AlertasPage() {
                       <PrioridadBadge prioridad={alerta.prioridad} />
                       <EstadoBadge alerta={alerta} />
                       {alerta.fecha_vencimiento && (
-                        <span className={cn('text-xs', vencida ? 'text-error font-medium' : 'text-outline')}>
+                        <span className={cn('text-xs', vencida ? 'text-red-600 font-medium' : 'text-slate-400')}>
                           Vence: {format(new Date(alerta.fecha_vencimiento + 'T00:00:00'), 'dd/MM/yyyy', { locale: es })}
                           {proxima && ' — vence hoy'}
                           {vencida && ' — VENCIDA'}
@@ -342,11 +332,11 @@ export default function AlertasPage() {
                     </div>
 
                     {alerta.descripcion && (
-                      <p className="text-xs text-on-surface-variant leading-relaxed line-clamp-2">{alerta.descripcion}</p>
+                      <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">{alerta.descripcion}</p>
                     )}
 
                     {alerta.observacion_cierre && (
-                      <p className="text-xs text-on-surface-variant italic">Cierre: {alerta.observacion_cierre}</p>
+                      <p className="text-xs text-slate-500 italic">Cierre: {alerta.observacion_cierre}</p>
                     )}
                   </div>
 
@@ -357,7 +347,7 @@ export default function AlertasPage() {
                         <Button
                           size="sm"
                           variant="outline"
-                          className="border-serie-1/30 text-on-primary-container hover:bg-primary-container h-7 text-xs"
+                          className="border-blue-300 text-blue-700 hover:bg-blue-50 h-7 text-xs"
                           onClick={() => handleProcesar(alerta)}
                           disabled={procesar.isPending}
                         >
@@ -368,7 +358,7 @@ export default function AlertasPage() {
                       <Button
                         size="sm"
                         variant={enProceso ? 'default' : 'outline'}
-                        className={cn('h-7 text-xs', enProceso && 'bg-exito hover:bg-exito')}
+                        className={cn('h-7 text-xs', enProceso && 'bg-green-600 hover:bg-green-700')}
                         onClick={() => setAlertaAResolver(alerta)}
                       >
                         <CheckCircle2 className="h-3 w-3 mr-1" />
@@ -378,7 +368,7 @@ export default function AlertasPage() {
                   )}
                 </div>
 
-                <p className="text-xs text-outline mt-2">
+                <p className="text-xs text-slate-300 mt-2">
                   Creada: {format(new Date(alerta.created_at), 'dd/MM/yyyy HH:mm', { locale: es })}
                 </p>
               </div>
@@ -391,7 +381,6 @@ export default function AlertasPage() {
         alerta={alertaAResolver}
         onClose={() => setAlertaAResolver(null)}
       />
-
     </div>
   )
 }

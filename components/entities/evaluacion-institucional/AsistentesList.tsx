@@ -54,11 +54,11 @@ export function AsistentesList({ evaluacionId }: AsistentesListProps) {
       </AccessGuard>
 
       {isLoading ? (
-        <p className="text-sm text-outline">Cargando...</p>
+        <p className="text-sm text-slate-400">Cargando...</p>
       ) : asistentes.length === 0 ? (
-        <p className="text-sm text-outline py-2">Sin asistentes convocados</p>
+        <p className="text-sm text-slate-400 py-2">Sin asistentes convocados</p>
       ) : (
-        <div className="divide-y divide-outline-variant">
+        <div className="divide-y divide-slate-100">
           {asistentes.map((a) => {
             const u = (a as any).usuario
             return (
@@ -81,7 +81,7 @@ export function AsistentesList({ evaluacionId }: AsistentesListProps) {
                     onClick={() => removeAsistente.mutate({ id: a.id, evaluacionId })}
                     title="Quitar"
                   >
-                    <Trash2 className="h-4 w-4 text-error" />
+                    <Trash2 className="h-4 w-4 text-red-500" />
                   </Button>
                 </AccessGuard>
               </div>

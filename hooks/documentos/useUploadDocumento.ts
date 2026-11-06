@@ -14,9 +14,9 @@ export function useUploadDocumento() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: async ({ legajoId, nnyaId, tipo, file }: UploadDocumentoInput) => {
-      // D-EX-06: verificar límite de 10 MB
+      // DOC-EX-01: verificar límite de 10 MB
       if (file.size > 10 * 1024 * 1024) {
-        throw new Error('El archivo supera el límite de 10 MB. (D-EX-06)')
+        throw new Error('El archivo supera el límite de 10 MB. (DOC-EX-01)')
       }
 
       const supabase = createClient()

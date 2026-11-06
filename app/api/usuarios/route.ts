@@ -46,8 +46,7 @@ export async function POST(request: Request) {
     return Response.json({ error: friendly }, { status: 400 })
   }
 
-  // Con la sesión del Admin, para que fn_audit_trigger registre quién dio el alta (plan 041).
-  const { data, error } = await supabaseServer
+  const { data, error } = await supabaseAdmin
     .from('usuarios')
     .insert({
       nombre,

@@ -78,7 +78,7 @@ export interface Medicamento extends Omit<Row<'medicamentos'>, 'estado'> {
 }
 
 export interface Informe extends Omit<Row<'informes'>, 'estado'> {
-  estado: 'borrador' | 'finalizado'
+  estado: 'borrador' | 'revisado' | 'finalizado'
 }
 
 export type Documento = Row<'documentos'>
@@ -89,7 +89,7 @@ export interface AudienciaJudicial extends Omit<Row<'audiencias_judiciales'>, 'e
 
 export type AuditLog = Row<'audit_log'>
 
-// ── FASE A1 (el documento de arquitectura § Roadmap) — ver plan 012, plan 019 ──
+// ── FASE A1 (AGENTS-WEB.md § Roadmap) — ver prompts/012, prompts/019 ──
 
 export interface Referente extends Omit<Row<'referentes'>, 'tipo'> {
   tipo: 'familiar' | 'educador' | 'vecino' | 'otro'
@@ -106,40 +106,6 @@ export interface ValidacionRenaper
   estado_dni: 'vigente' | 'vencido' | 'inexistente' | 'error_servicio'
   resultado: 'aprobado' | 'rechazado' | 'no_concluyente'
   respuesta_cruda: Record<string, unknown> | null
-}
-
-// Retiros con verificación Didit (plan 028, 046 y 049).
-export interface AutorizacionRetiro extends Omit<Row<'autorizaciones_retiro'>, 'estado'> {
-  estado: 'vigente' | 'revocada'
-  nnya_tutores?: NnyaTutor
-}
-
-export interface Retiro
-  extends Omit<
-    Row<'retiros'>,
-    'estado' | 'resultado_autorizacion' | 'consentimiento_didit' | 'metodo_verificacion'
-  > {
-  estado: 'en_curso' | 'requiere_revision' | 'realizada' | 'rechazada'
-  resultado_autorizacion: 'pendiente' | 'autorizada' | 'rechazada'
-  consentimiento_didit: 'aceptado' | 'rechazado' | null
-  metodo_verificacion: 'didit' | 'manual' | null
-  nnya?: Pick<Nnya, 'id' | 'nombre' | 'apellido'>
-  tutores?: Pick<Tutor, 'id' | 'nombre' | 'apellido' | 'dni' | 'parentesco'>
-  sesiones_didit?: SesionDidit[]
-}
-
-export type EstadoRnf12 =
-  | 'Pendiente'
-  | 'Identidad verificada'
-  | 'Identidad no verificada'
-  | 'Requiere revisión'
-  | 'Error del proveedor'
-
-export interface SesionDidit
-  extends Omit<Row<'sesiones_didit'>, 'proposito' | 'estado_rnf12' | 'error_proveedor'> {
-  proposito: 'retiro' | 'validacion_referente'
-  estado_rnf12: EstadoRnf12
-  error_proveedor: 'provider_error' | 'didit_no_disponible' | null
 }
 
 export interface TransferenciaAuh extends Omit<Row<'transferencia_auh'>, 'estado'> {
@@ -171,26 +137,4 @@ export interface SeguimientoPostEgreso
   escolaridad: 'cumple' | 'parcial' | 'no_cumple' | 'no_corresponde' | null
   salud: 'cumple' | 'parcial' | 'no_cumple' | 'no_corresponde' | null
   terapias: 'cumple' | 'parcial' | 'no_cumple' | 'no_corresponde' | null
-}
-
-export interface SeccionInforme {
-  clave: string
-  titulo: string
-  texto: string
-}
-
-export interface AdvertenciaInforme {
-  clave: string | null
-  mensaje: string
-}
-
-export interface ReporteSenaf
-  extends Omit<Row<'reportes_senaf'>, 'estado' | 'origen_borrador' | 'borrador' | 'texto_final' | 'advertencias'> {
-  estado: 'borrador' | 'aprobado'
-  origen_borrador: 'ia' | 'plantilla'
-  borrador: SeccionInforme[]
-  texto_final: SeccionInforme[]
-  advertencias: AdvertenciaInforme[]
-  generador?: { nombre: string; apellido: string } | null
-  aprobador?: { nombre: string; apellido: string } | null
 }

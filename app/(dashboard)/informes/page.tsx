@@ -1,6 +1,5 @@
 'use client'
 
-import { StatRow } from '@/components/shared/KPICard'
 import { useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { useInformes } from '@/hooks/informes/useInformes'
@@ -19,6 +18,7 @@ const TIPOS = ['Psicosocial', 'Médico', 'Educativo', 'Judicial', 'Egreso', 'Seg
 
 function EstadoBadge({ estado }: { estado: Informe['estado'] }) {
   if (estado === 'finalizado') return <Badge variant="success">Enviado</Badge>
+  if (estado === 'revisado') return <Badge className="bg-blue-100 text-blue-700 border border-blue-200">Revisado</Badge>
   return <Badge variant="outline">Borrador</Badge>
 }
 
@@ -65,12 +65,12 @@ export default function InformesPage() {
   }, [informes, filtroEstado, filtroTipo, busqueda])
 
   return (
-    <div className="px-8 py-6 space-y-6">
+    <div className="p-6 space-y-6 max-w-5xl">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-title font-semibold text-on-surface">Informes</h1>
-          <p className="text-sm text-on-surface-variant">Vista global de todos los informes institucionales generados.</p>
+          <h1 className="text-xl font-semibold text-slate-900">Informes</h1>
+          <p className="text-sm text-slate-500">Vista global de todos los informes institucionales generados.</p>
         </div>
         <Button variant="outline" size="sm" onClick={() => exportCSV(filtrados)}>
           <Download className="h-4 w-4 mr-1.5" />Exportar CSV
@@ -78,14 +78,17 @@ export default function InformesPage() {
       </div>
 
       {/* Stats */}
-      <div className="border-b border-filete pb-6">
-        <StatRow
-          stats={[
-            { id: 'total', label: 'Total', valor: informes.length },
-            { id: 'enviados', label: 'Enviados', valor: informes.filter((i) => i.estado === 'finalizado').length },
-            { id: 'borradores', label: 'Borradores', valor: informes.filter((i) => i.estado === 'borrador').length },
-          ]}
-        />
+      <div className="grid grid-cols-3 gap-3">
+        {[
+          { label: 'Total', value: informes.length },
+          { label: 'Enviados', value: informes.filter((i) => i.estado === 'finalizado').length },
+          { label: 'Borradores', value: informes.filter((i) => i.estado === 'borrador').length },
+        ].map(({ label, value }) => (
+          <div key={label} className="border border-slate-100 rounded-lg p-3 bg-white">
+            <p className="text-xs text-slate-500">{label}</p>
+            <p className="text-2xl font-bold text-slate-900 mt-0.5">{value}</p>
+          </div>
+        ))}
       </div>
 
       {/* Filtros */}
@@ -95,6 +98,7 @@ export default function InformesPage() {
           <SelectContent>
             <SelectItem value="todos">Todos los estados</SelectItem>
             <SelectItem value="finalizado">Enviados</SelectItem>
+            <SelectItem value="revisado">Revisados</SelectItem>
             <SelectItem value="borrador">Borradores</SelectItem>
           </SelectContent>
         </Select>
@@ -106,49 +110,49 @@ export default function InformesPage() {
           </SelectContent>
         </Select>
         <div className="relative flex-1 min-w-52">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-outline" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
           <input
             type="text"
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
             placeholder="Buscar por NNyA, título o legajo..."
-            className="w-full pl-9 pr-3 py-2 text-sm border border-outline-variant rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
+            className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
           />
         </div>
       </div>
 
       {/* Tabla */}
       {isLoading ? (
-        <p className="text-sm text-outline py-8 text-center">Cargando informes...</p>
+        <p className="text-sm text-slate-400 py-8 text-center">Cargando informes...</p>
       ) : filtrados.length === 0 ? (
         <div className="py-12 text-center">
-          <FileText className="h-8 w-8 text-outline mx-auto mb-2" />
-          <p className="text-sm text-outline">No hay informes que coincidan con los filtros</p>
+          <FileText className="h-8 w-8 text-slate-300 mx-auto mb-2" />
+          <p className="text-sm text-slate-400">No hay informes que coincidan con los filtros</p>
         </div>
       ) : (
-        <div className="border border-outline-variant rounded-lg overflow-hidden">
+        <div className="border border-slate-100 rounded-lg overflow-hidden">
           <table className="w-full text-sm">
-            <thead className="bg-surface-container-low border-b border-outline-variant">
+            <thead className="bg-slate-50 border-b border-slate-100">
               <tr>
-                <th className="text-left px-4 py-2.5 text-xs font-medium text-on-surface-variant">Fecha</th>
-                <th className="text-left px-4 py-2.5 text-xs font-medium text-on-surface-variant">Título</th>
-                <th className="text-left px-4 py-2.5 text-xs font-medium text-on-surface-variant">Tipo</th>
-                <th className="text-left px-4 py-2.5 text-xs font-medium text-on-surface-variant">NNyA</th>
-                <th className="text-left px-4 py-2.5 text-xs font-medium text-on-surface-variant">Estado</th>
-                <th className="text-right px-4 py-2.5 text-xs font-medium text-on-surface-variant">Acciones</th>
+                <th className="text-left px-4 py-2.5 text-xs font-medium text-slate-500">Fecha</th>
+                <th className="text-left px-4 py-2.5 text-xs font-medium text-slate-500">Título</th>
+                <th className="text-left px-4 py-2.5 text-xs font-medium text-slate-500">Tipo</th>
+                <th className="text-left px-4 py-2.5 text-xs font-medium text-slate-500">NNyA</th>
+                <th className="text-left px-4 py-2.5 text-xs font-medium text-slate-500">Estado</th>
+                <th className="text-right px-4 py-2.5 text-xs font-medium text-slate-500">Acciones</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-outline-variant">
+            <tbody className="divide-y divide-slate-50">
               {filtrados.map((inf) => (
-                <tr key={inf.id} className="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
-                  <td className="px-4 py-3 text-xs text-on-surface-variant whitespace-nowrap">
+                <tr key={inf.id} className="bg-white hover:bg-slate-50 transition-colors">
+                  <td className="px-4 py-3 text-xs text-slate-500 whitespace-nowrap">
                     {format(new Date(inf.fecha_informe + 'T00:00:00'), 'dd/MM/yyyy', { locale: es })}
                   </td>
-                  <td className="px-4 py-3 text-sm font-medium text-on-surface max-w-[200px] truncate">{inf.titulo}</td>
-                  <td className="px-4 py-3 text-xs text-on-surface-variant">{inf.tipo}</td>
-                  <td className="px-4 py-3 text-sm text-on-surface-variant">
+                  <td className="px-4 py-3 text-sm font-medium text-slate-900 max-w-[200px] truncate">{inf.titulo}</td>
+                  <td className="px-4 py-3 text-xs text-slate-600">{inf.tipo}</td>
+                  <td className="px-4 py-3 text-sm text-slate-700">
                     {inf.nnya ? `${inf.nnya.apellido}, ${inf.nnya.nombre}` : '—'}
-                    {inf.legajo && <span className="ml-1.5 text-xs text-outline">{inf.legajo.numero_legajo}</span>}
+                    {inf.legajo && <span className="ml-1.5 text-xs text-slate-400">{inf.legajo.numero_legajo}</span>}
                   </td>
                   <td className="px-4 py-3"><EstadoBadge estado={inf.estado} /></td>
                   <td className="px-4 py-3 text-right">
@@ -167,7 +171,7 @@ export default function InformesPage() {
               ))}
             </tbody>
           </table>
-          <div className="px-4 py-2.5 bg-surface-container-low border-t border-outline-variant text-xs text-outline">
+          <div className="px-4 py-2.5 bg-slate-50 border-t border-slate-100 text-xs text-slate-400">
             {filtrados.length} informe{filtrados.length !== 1 ? 's' : ''} mostrado{filtrados.length !== 1 ? 's' : ''}
           </div>
         </div>
