@@ -15,7 +15,7 @@ import type { Medicamento } from '@/types/database.types'
 
 function EstadoBadge({ estado }: { estado: Medicamento['estado'] }) {
   if (estado === 'finalizado') return <Badge variant="secondary">Finalizado</Badge>
-  return <Badge className="bg-exito-container text-exito border border-exito/30">En curso</Badge>
+  return <Badge className="bg-green-100 text-green-700 border border-green-200">En curso</Badge>
 }
 
 interface FinalizarModalProps {
@@ -44,14 +44,14 @@ function FinalizarModal({ medicamento, legajoId, onClose }: FinalizarModalProps)
         <DialogHeader><DialogTitle>Finalizar tratamiento</DialogTitle></DialogHeader>
         {medicamento && (
           <div className="space-y-3 pt-1">
-            <div className="bg-surface-container-low rounded-lg p-3 text-sm space-y-1">
-              <p className="font-medium text-on-surface">{medicamento.nombre}</p>
-              <p className="text-on-surface-variant text-xs">{medicamento.dosis} · {medicamento.frecuencia}</p>
+            <div className="bg-slate-50 rounded-lg p-3 text-sm space-y-1">
+              <p className="font-medium text-slate-900">{medicamento.nombre}</p>
+              <p className="text-slate-500 text-xs">{medicamento.dosis} · {medicamento.frecuencia}</p>
               {medicamento.prescriptor && (
-                <p className="text-outline text-xs">Prescriptor: {medicamento.prescriptor}</p>
+                <p className="text-slate-400 text-xs">Prescriptor: {medicamento.prescriptor}</p>
               )}
             </div>
-            <p className="text-sm text-on-tertiary-fixed bg-tertiary-fixed border border-tertiary/30 rounded-lg px-3 py-2">
+            <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
               Se registrará la fecha de hoy como fecha de fin. El tratamiento no se podrá reactivar — si se reinicia, debe registrarse como un nuevo tratamiento. (M-EX-06)
             </p>
           </div>
@@ -80,8 +80,8 @@ export function MedicamentoList({ medicamentos, legajoId, legajoActivo }: Medica
   if (medicamentos.length === 0) {
     return (
       <div className="py-6 text-center">
-        <Pill className="h-6 w-6 text-outline mx-auto mb-1.5" />
-        <p className="text-sm text-outline">No hay tratamientos registrados</p>
+        <Pill className="h-6 w-6 text-slate-300 mx-auto mb-1.5" />
+        <p className="text-sm text-slate-400">No hay tratamientos registrados</p>
       </div>
     )
   }
@@ -98,21 +98,21 @@ export function MedicamentoList({ medicamentos, legajoId, legajoActivo }: Medica
       <div className="space-y-4">
         {grupos.map(({ label, items }) => (
           <div key={label}>
-            <p className="text-xs font-medium text-on-surface-variant uppercase tracking-wide mb-2">{label}</p>
-            <div className="divide-y divide-outline-variant border border-outline-variant rounded-lg overflow-hidden">
+            <p className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-2">{label}</p>
+            <div className="divide-y divide-slate-100 border border-slate-100 rounded-lg overflow-hidden">
               {items.map((med) => (
-                <div key={med.id} className={cn('p-3 bg-surface-container-lowest', med.estado === 'finalizado' && 'opacity-70')}>
+                <div key={med.id} className={cn('p-3 bg-white', med.estado === 'finalizado' && 'opacity-70')}>
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex-1 min-w-0 space-y-1">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-sm font-medium text-on-surface">{med.nombre}</span>
+                        <span className="text-sm font-medium text-slate-900">{med.nombre}</span>
                         <EstadoBadge estado={med.estado} />
                       </div>
-                      <p className="text-xs text-on-surface-variant">
+                      <p className="text-xs text-slate-600">
                         {med.dosis} · {med.frecuencia}
                         {med.via_administracion && ` · ${med.via_administracion}`}
                       </p>
-                      <div className="flex items-center gap-3 text-xs text-outline flex-wrap">
+                      <div className="flex items-center gap-3 text-xs text-slate-400 flex-wrap">
                         <span>Inicio: {format(new Date(med.fecha_inicio + 'T00:00:00'), 'dd/MM/yyyy', { locale: es })}</span>
                         {med.fecha_fin && (
                           <span>Fin: {format(new Date(med.fecha_fin + 'T00:00:00'), 'dd/MM/yyyy', { locale: es })}</span>
@@ -120,7 +120,7 @@ export function MedicamentoList({ medicamentos, legajoId, legajoActivo }: Medica
                         {med.prescriptor && <span>· {med.prescriptor}</span>}
                       </div>
                       {med.observaciones && (
-                        <p className="text-xs text-on-surface-variant italic">{med.observaciones}</p>
+                        <p className="text-xs text-slate-500 italic">{med.observaciones}</p>
                       )}
                     </div>
 
@@ -128,7 +128,7 @@ export function MedicamentoList({ medicamentos, legajoId, legajoActivo }: Medica
                       <Button
                         size="sm"
                         variant="outline"
-                        className="h-7 text-xs border-error/30 text-error hover:bg-error-container shrink-0"
+                        className="h-7 text-xs border-red-200 text-red-600 hover:bg-red-50 shrink-0"
                         onClick={() => setAFinalizar(med)}
                       >
                         <StopCircle className="h-3 w-3 mr-1" />

@@ -268,57 +268,6 @@ export type Database = {
           },
         ]
       }
-      autorizaciones_retiro: {
-        Row: {
-          created_at: string
-          created_by: string
-          estado: string
-          id: string
-          nnya_tutor_id: string
-          restricciones: string | null
-          updated_at: string
-          vigente_desde: string
-          vigente_hasta: string | null
-        }
-        Insert: {
-          created_at?: string
-          created_by: string
-          estado?: string
-          id?: string
-          nnya_tutor_id: string
-          restricciones?: string | null
-          updated_at?: string
-          vigente_desde?: string
-          vigente_hasta?: string | null
-        }
-        Update: {
-          created_at?: string
-          created_by?: string
-          estado?: string
-          id?: string
-          nnya_tutor_id?: string
-          restricciones?: string | null
-          updated_at?: string
-          vigente_desde?: string
-          vigente_hasta?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "autorizaciones_retiro_created_by_fkey"
-            columns: ["created_by"]
-            isOneToOne: false
-            referencedRelation: "usuarios"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "autorizaciones_retiro_nnya_tutor_id_fkey"
-            columns: ["nnya_tutor_id"]
-            isOneToOne: false
-            referencedRelation: "nnya_tutores"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       diagnosticos: {
         Row: {
           created_at: string
@@ -654,7 +603,6 @@ export type Database = {
         Row: {
           contenido: string
           created_at: string
-          destinatario: string | null
           elaborado_por: string | null
           estado: string
           fecha_informe: string
@@ -668,7 +616,6 @@ export type Database = {
         Insert: {
           contenido: string
           created_at?: string
-          destinatario?: string | null
           elaborado_por?: string | null
           estado?: string
           fecha_informe?: string
@@ -682,7 +629,6 @@ export type Database = {
         Update: {
           contenido?: string
           created_at?: string
-          destinatario?: string | null
           elaborado_por?: string | null
           estado?: string
           fecha_informe?: string
@@ -792,7 +738,6 @@ export type Database = {
           fecha_cierre: string | null
           id: string
           motivo_cierre: string | null
-          motivo_ingreso: string | null
           nnya_id: string
           numero_legajo: string
           observaciones: string | null
@@ -805,7 +750,6 @@ export type Database = {
           fecha_cierre?: string | null
           id?: string
           motivo_cierre?: string | null
-          motivo_ingreso?: string | null
           nnya_id: string
           numero_legajo: string
           observaciones?: string | null
@@ -818,7 +762,6 @@ export type Database = {
           fecha_cierre?: string | null
           id?: string
           motivo_cierre?: string | null
-          motivo_ingreso?: string | null
           nnya_id?: string
           numero_legajo?: string
           observaciones?: string | null
@@ -1188,183 +1131,6 @@ export type Database = {
           },
         ]
       }
-      reportes_senaf: {
-        Row: {
-          advertencias: Json
-          aprobado_at: string | null
-          aprobado_por: string | null
-          borrador: Json
-          created_at: string
-          datos: Json
-          estado: string
-          generado_por: string
-          id: string
-          modelo: string | null
-          observaciones_direccion: string | null
-          origen_borrador: string
-          periodo_anio: number
-          periodo_mes: number
-          texto_final: Json
-          updated_at: string
-          version: number
-        }
-        Insert: {
-          advertencias?: Json
-          aprobado_at?: string | null
-          aprobado_por?: string | null
-          borrador: Json
-          created_at?: string
-          datos: Json
-          estado?: string
-          generado_por: string
-          id?: string
-          modelo?: string | null
-          observaciones_direccion?: string | null
-          origen_borrador: string
-          periodo_anio: number
-          periodo_mes: number
-          texto_final: Json
-          updated_at?: string
-          version?: number
-        }
-        Update: {
-          advertencias?: Json
-          aprobado_at?: string | null
-          aprobado_por?: string | null
-          borrador?: Json
-          created_at?: string
-          datos?: Json
-          estado?: string
-          generado_por?: string
-          id?: string
-          modelo?: string | null
-          observaciones_direccion?: string | null
-          origen_borrador?: string
-          periodo_anio?: number
-          periodo_mes?: number
-          texto_final?: Json
-          updated_at?: string
-          version?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "reportes_senaf_aprobado_por_fkey"
-            columns: ["aprobado_por"]
-            isOneToOne: false
-            referencedRelation: "usuarios"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "reportes_senaf_generado_por_fkey"
-            columns: ["generado_por"]
-            isOneToOne: false
-            referencedRelation: "usuarios"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      retiros: {
-        Row: {
-          autorizacion_retiro_id: string
-          autorizado_at: string | null
-          autorizado_por: string | null
-          consentimiento_didit: string | null
-          created_at: string
-          created_by: string
-          descripcion: string | null
-          estado: string
-          fecha_fin: string | null
-          fecha_inicio: string
-          id: string
-          metodo_verificacion: string | null
-          motivo_fallback: string | null
-          motivo_rechazo: string | null
-          nnya_id: string
-          observaciones: string | null
-          resultado_autorizacion: string
-          tutor_id: string
-          updated_at: string
-        }
-        Insert: {
-          autorizacion_retiro_id: string
-          autorizado_at?: string | null
-          autorizado_por?: string | null
-          consentimiento_didit?: string | null
-          created_at?: string
-          created_by: string
-          descripcion?: string | null
-          estado?: string
-          fecha_fin?: string | null
-          fecha_inicio?: string
-          id?: string
-          metodo_verificacion?: string | null
-          motivo_fallback?: string | null
-          motivo_rechazo?: string | null
-          nnya_id: string
-          observaciones?: string | null
-          resultado_autorizacion?: string
-          tutor_id: string
-          updated_at?: string
-        }
-        Update: {
-          autorizacion_retiro_id?: string
-          autorizado_at?: string | null
-          autorizado_por?: string | null
-          consentimiento_didit?: string | null
-          created_at?: string
-          created_by?: string
-          descripcion?: string | null
-          estado?: string
-          fecha_fin?: string | null
-          fecha_inicio?: string
-          id?: string
-          metodo_verificacion?: string | null
-          motivo_fallback?: string | null
-          motivo_rechazo?: string | null
-          nnya_id?: string
-          observaciones?: string | null
-          resultado_autorizacion?: string
-          tutor_id?: string
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "retiros_autorizacion_retiro_id_fkey"
-            columns: ["autorizacion_retiro_id"]
-            isOneToOne: false
-            referencedRelation: "autorizaciones_retiro"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "retiros_autorizado_por_fkey"
-            columns: ["autorizado_por"]
-            isOneToOne: false
-            referencedRelation: "usuarios"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "retiros_created_by_fkey"
-            columns: ["created_by"]
-            isOneToOne: false
-            referencedRelation: "usuarios"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "retiros_nnya_id_fkey"
-            columns: ["nnya_id"]
-            isOneToOne: false
-            referencedRelation: "nnya"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "retiros_tutor_id_fkey"
-            columns: ["tutor_id"]
-            isOneToOne: false
-            referencedRelation: "tutores"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       roles: {
         Row: {
           activo: boolean
@@ -1476,76 +1242,6 @@ export type Database = {
             columns: ["vinculo_id"]
             isOneToOne: false
             referencedRelation: "vinculos_tutela"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      sesiones_didit: {
-        Row: {
-          creada_por: string
-          created_at: string
-          dni_coincide: boolean | null
-          error_proveedor: string | null
-          estado_didit: string | null
-          estado_rnf12: string
-          finalizada_at: string | null
-          id: string
-          proposito: string
-          referente_id: string | null
-          retiro_id: string | null
-          session_id: string | null
-          updated_at: string
-        }
-        Insert: {
-          creada_por: string
-          created_at?: string
-          dni_coincide?: boolean | null
-          error_proveedor?: string | null
-          estado_didit?: string | null
-          estado_rnf12?: string
-          finalizada_at?: string | null
-          id?: string
-          proposito: string
-          referente_id?: string | null
-          retiro_id?: string | null
-          session_id?: string | null
-          updated_at?: string
-        }
-        Update: {
-          creada_por?: string
-          created_at?: string
-          dni_coincide?: boolean | null
-          error_proveedor?: string | null
-          estado_didit?: string | null
-          estado_rnf12?: string
-          finalizada_at?: string | null
-          id?: string
-          proposito?: string
-          referente_id?: string | null
-          retiro_id?: string | null
-          session_id?: string | null
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "sesiones_didit_creada_por_fkey"
-            columns: ["creada_por"]
-            isOneToOne: false
-            referencedRelation: "usuarios"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "sesiones_didit_referente_id_fkey"
-            columns: ["referente_id"]
-            isOneToOne: false
-            referencedRelation: "referentes"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "sesiones_didit_retiro_id_fkey"
-            columns: ["retiro_id"]
-            isOneToOne: false
-            referencedRelation: "retiros"
             referencedColumns: ["id"]
           },
         ]
@@ -1860,7 +1556,6 @@ export type Database = {
           referente_id: string
           respuesta_cruda: Json | null
           resultado: string
-          sesion_didit_id: string | null
           tiene_antecedentes: boolean | null
         }
         Insert: {
@@ -1873,7 +1568,6 @@ export type Database = {
           referente_id: string
           respuesta_cruda?: Json | null
           resultado: string
-          sesion_didit_id?: string | null
           tiene_antecedentes?: boolean | null
         }
         Update: {
@@ -1886,7 +1580,6 @@ export type Database = {
           referente_id?: string
           respuesta_cruda?: Json | null
           resultado?: string
-          sesion_didit_id?: string | null
           tiene_antecedentes?: boolean | null
         }
         Relationships: [
@@ -1902,13 +1595,6 @@ export type Database = {
             columns: ["referente_id"]
             isOneToOne: false
             referencedRelation: "referentes"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "validaciones_renaper_sesion_didit_fkey"
-            columns: ["sesion_didit_id"]
-            isOneToOne: false
-            referencedRelation: "sesiones_didit"
             referencedColumns: ["id"]
           },
         ]
@@ -1998,18 +1684,6 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      fn_agregados_senaf: {
-        Args: { p_anio: number; p_mes: number }
-        Returns: Json
-      }
-      fn_estado_rnf12_didit: {
-        Args: {
-          p_dni_coincide: boolean
-          p_error_proveedor: string
-          p_estado_didit: string
-        }
-        Returns: string
-      }
       get_my_role: { Args: never; Returns: string }
     }
     Enums: {

@@ -36,13 +36,8 @@ export default function TutoresPage() {
     try {
       await deleteMutation.mutateAsync(toDelete.id)
       toast({ title: 'Tutor eliminado', variant: 'success' })
-    } catch (e) {
-      const err = e as { code?: string; message?: string }
-      // 23503: el tutor tiene NNyA asignados (nnya_tutores.tutor_id es RESTRICT, plan 036)
-      const description = err.code === '23503'
-        ? 'El tutor tiene NNyA asignados. Desasignalo de cada NNyA antes de eliminarlo.'
-        : err.message
-      toast({ title: 'No se puede eliminar', description, variant: 'destructive' })
+    } catch (e: any) {
+      toast({ title: 'Error al eliminar', description: e.message, variant: 'destructive' })
     } finally {
       setToDelete(null)
     }
@@ -51,13 +46,13 @@ export default function TutoresPage() {
   return (
     <AccessGuard
       roles={['Admin', 'Equipo Tecnico']}
-      fallback={<div className="p-8 text-on-surface-variant">Sin acceso</div>}
+      fallback={<div className="p-8 text-slate-500">Sin acceso</div>}
     >
-      <div className="px-8 py-6 space-y-6">
+      <div className="p-6 space-y-5">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-title font-semibold text-on-surface">Tutores / Familiares</h1>
-            <p className="text-sm text-on-surface-variant">{tutores.length} registros</p>
+            <h1 className="text-xl font-semibold text-slate-900">Tutores / Familiares</h1>
+            <p className="text-sm text-slate-500">{tutores.length} registros</p>
           </div>
           <Button onClick={() => router.push('/tutores/nuevo')}>
             <Plus className="h-4 w-4 mr-2" />
@@ -66,7 +61,7 @@ export default function TutoresPage() {
         </div>
 
         <div className="relative max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-outline" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}

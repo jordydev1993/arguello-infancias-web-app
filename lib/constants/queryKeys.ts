@@ -119,22 +119,4 @@ export const queryKeys = {
     all: ['seguimiento_post_egreso'] as const,
     lists: () => [...queryKeys.seguimientoPostEgreso.all, 'list'] as const,
   },
-  reportesSenaf: {
-    all: ['reportes_senaf'] as const,
-    lists: () => [...queryKeys.reportesSenaf.all, 'list'] as const,
-    detail: (id: string) => [...queryKeys.reportesSenaf.all, id] as const,
-  },
-  retiros: {
-    all: ['retiros'] as const,
-    lists: () => [...queryKeys.retiros.all, 'list'] as const,
-    detail: (id: string) => [...queryKeys.retiros.all, id] as const,
-  },
-  autorizacionesRetiro: {
-    all: ['autorizaciones_retiro'] as const,
-    byNnya: (nnyaId: string) => [...queryKeys.autorizacionesRetiro.all, 'nnya', nnyaId] as const,
-  },
-  sesionesDidit: {
-    all: ['sesiones_didit'] as const,
-    estado: (sesionId: string) => [...queryKeys.sesionesDidit.all, 'estado', sesionId] as const,
-  },
 }

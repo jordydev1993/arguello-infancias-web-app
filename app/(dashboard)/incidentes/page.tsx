@@ -1,9 +1,5 @@
 'use client'
 
-import { StatRow } from '@/components/shared/KPICard'
-import { Panel } from '@/components/shared/Panel'
-import { GraficoBarras } from '@/components/charts/GraficoBarras'
-import { BarrasProgreso } from '@/components/charts/BarrasProgreso'
 import { useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { useIncidentes } from '@/hooks/incidentes/useIncidentes'
@@ -13,14 +9,25 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { AlertTriangle, Search, Download, ExternalLink } from 'lucide-react'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
+import { cn } from '@/lib/utils'
 import type { Incidente } from '@/types/database.types'
+import {
+  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend,
+} from 'recharts'
 
 type FiltroGravedad = 'todos' | Incidente['gravedad']
 type FiltroEstado = 'todos' | Incidente['estado']
 
+const GRAVEDAD_COLORS: Record<string, string> = {
+  leve: '#94a3b8',
+  media: '#f59e0b',
+  grave: '#f97316',
+  critico: '#ef4444',
+}
+
 function GravedadBadge({ gravedad }: { gravedad: Incidente['gravedad'] }) {
   if (gravedad === 'critico') return <Badge variant="destructive">Crítico</Badge>
-  if (gravedad === 'grave') return <Badge className="bg-tertiary-fixed text-on-tertiary-fixed border border-tertiary/30">Grave</Badge>
+  if (gravedad === 'grave') return <Badge className="bg-orange-100 text-orange-700 border border-orange-200">Grave</Badge>
   if (gravedad === 'media') return <Badge variant="outline">Media</Badge>
   return <Badge variant="secondary">Leve</Badge>
 }
@@ -77,16 +84,16 @@ export default function IncidentesPage() {
   const porGravedad = useMemo(() => {
     const counts: Record<string, number> = { leve: 0, media: 0, grave: 0, critico: 0 }
     incidentes.forEach((i) => { counts[i.gravedad] = (counts[i.gravedad] ?? 0) + 1 })
-    return Object.entries(counts).filter(([, v]) => v > 0).map(([name, value]) => ({ name, value }))
+    return Object.entries(counts).filter(([, v]) => v > 0).map(([name, value]) => ({ name, value, color: GRAVEDAD_COLORS[name] }))
   }, [incidentes])
 
   return (
-    <div className="px-8 py-6 space-y-6">
+    <div className="p-6 space-y-6 max-w-5xl">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-title font-semibold text-on-surface">Incidentes</h1>
-          <p className="text-sm text-on-surface-variant">Vista global de todos los incidentes registrados en el sistema.</p>
+          <h1 className="text-xl font-semibold text-slate-900">Incidentes</h1>
+          <p className="text-sm text-slate-500">Vista global de todos los incidentes registrados en el sistema.</p>
         </div>
         <Button variant="outline" size="sm" onClick={() => exportCSV(filtrados)}>
           <Download className="h-4 w-4 mr-1.5" />Exportar CSV
@@ -94,35 +101,47 @@ export default function IncidentesPage() {
       </div>
 
       {/* Stats */}
-      <div className="border-b border-filete pb-6">
-        <StatRow
-          stats={[
-            { id: 'total', label: 'Total', valor: incidentes.length },
-            { id: 'criticos', label: 'Críticos', valor: incidentes.filter((i) => i.gravedad === 'critico').length },
-            { id: 'graves', label: 'Graves', valor: incidentes.filter((i) => i.gravedad === 'grave').length },
-            { id: 'abiertos', label: 'Abiertos', valor: incidentes.filter((i) => i.estado === 'abierto').length },
-          ]}
-        />
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        {[
+          { label: 'Total', value: incidentes.length, color: 'slate' },
+          { label: 'Críticos', value: incidentes.filter((i) => i.gravedad === 'critico').length, color: 'red' },
+          { label: 'Graves', value: incidentes.filter((i) => i.gravedad === 'grave').length, color: 'orange' },
+          { label: 'Abiertos', value: incidentes.filter((i) => i.estado === 'abierto').length, color: 'amber' },
+        ].map(({ label, value, color }) => (
+          <div key={label} className="border border-slate-100 rounded-lg p-3 bg-white">
+            <p className="text-xs text-slate-500">{label}</p>
+            <p className={cn('text-2xl font-bold mt-0.5', color === 'red' && 'text-red-600', color === 'orange' && 'text-orange-500', color === 'amber' && 'text-amber-500', color === 'slate' && 'text-slate-900')}>{value}</p>
+          </div>
+        ))}
       </div>
 
-      {/* Gráficos (plan 052): barras por tipo y parte de cada gravedad sobre el total. */}
+      {/* Gráficos */}
       {incidentes.length > 0 && (
-        <div className="grid grid-cols-1 divide-y divide-filete border-b border-filete md:grid-cols-2 md:divide-x md:divide-y-0">
-          <Panel title="Por tipo" className="pb-6 md:pr-6">
-            <GraficoBarras
-              datos={porTipo.map((t) => ({ etiqueta: t.name, valor: t.value }))}
-              color="var(--color-serie-1)"
-              unidad="incidentes"
-              descripcion="Incidentes por tipo"
-            />
-          </Panel>
-          <Panel title="Por gravedad" className="py-6 md:py-0 md:pb-6 md:pl-6">
-            <BarrasProgreso
-              datos={porGravedad.map((g) => ({ etiqueta: g.name, valor: g.value }))}
-              relleno="bg-serie-1"
-              descripcion="Parte de cada gravedad sobre el total de incidentes"
-            />
-          </Panel>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="border border-slate-100 rounded-lg p-4 bg-white">
+            <p className="text-xs font-semibold text-slate-700 mb-3">Por tipo</p>
+            <ResponsiveContainer width="100%" height={180}>
+              <BarChart data={porTipo} layout="vertical">
+                <XAxis type="number" tick={{ fontSize: 11 }} />
+                <YAxis type="category" dataKey="name" width={110} tick={{ fontSize: 10 }} />
+                <Tooltip />
+                <Bar dataKey="value" fill="#6366f1" radius={2} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="border border-slate-100 rounded-lg p-4 bg-white">
+            <p className="text-xs font-semibold text-slate-700 mb-3">Por gravedad</p>
+            <ResponsiveContainer width="100%" height={180}>
+              <PieChart>
+                <Pie data={porGravedad} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={70} label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`} labelLine={false}>
+                  {porGravedad.map((entry) => (
+                    <Cell key={entry.name} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Legend formatter={(v) => <span style={{ fontSize: 11 }}>{v}</span>} />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
         </div>
       )}
 
@@ -148,52 +167,52 @@ export default function IncidentesPage() {
           </SelectContent>
         </Select>
         <div className="relative flex-1 min-w-52">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-outline" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
           <input
             type="text"
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
             placeholder="Buscar por NNyA, tipo o descripción..."
-            className="w-full pl-9 pr-3 py-2 text-sm border border-outline-variant rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
+            className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
           />
         </div>
       </div>
 
       {/* Tabla */}
       {isLoading ? (
-        <p className="text-sm text-outline py-8 text-center">Cargando incidentes...</p>
+        <p className="text-sm text-slate-400 py-8 text-center">Cargando incidentes...</p>
       ) : filtrados.length === 0 ? (
         <div className="py-12 text-center">
-          <AlertTriangle className="h-8 w-8 text-outline mx-auto mb-2" />
-          <p className="text-sm text-outline">No hay incidentes que coincidan con los filtros</p>
+          <AlertTriangle className="h-8 w-8 text-slate-300 mx-auto mb-2" />
+          <p className="text-sm text-slate-400">No hay incidentes que coincidan con los filtros</p>
         </div>
       ) : (
-        <div className="border border-outline-variant rounded-lg overflow-hidden">
+        <div className="border border-slate-100 rounded-lg overflow-hidden">
           <table className="w-full text-sm">
-            <thead className="bg-surface-container-low border-b border-outline-variant">
+            <thead className="bg-slate-50 border-b border-slate-100">
               <tr>
-                <th className="text-left px-4 py-2.5 text-xs font-medium text-on-surface-variant">Fecha</th>
-                <th className="text-left px-4 py-2.5 text-xs font-medium text-on-surface-variant">NNyA</th>
-                <th className="text-left px-4 py-2.5 text-xs font-medium text-on-surface-variant">Tipo</th>
-                <th className="text-left px-4 py-2.5 text-xs font-medium text-on-surface-variant">Gravedad</th>
-                <th className="text-left px-4 py-2.5 text-xs font-medium text-on-surface-variant">Estado</th>
-                <th className="text-right px-4 py-2.5 text-xs font-medium text-on-surface-variant">Acciones</th>
+                <th className="text-left px-4 py-2.5 text-xs font-medium text-slate-500">Fecha</th>
+                <th className="text-left px-4 py-2.5 text-xs font-medium text-slate-500">NNyA</th>
+                <th className="text-left px-4 py-2.5 text-xs font-medium text-slate-500">Tipo</th>
+                <th className="text-left px-4 py-2.5 text-xs font-medium text-slate-500">Gravedad</th>
+                <th className="text-left px-4 py-2.5 text-xs font-medium text-slate-500">Estado</th>
+                <th className="text-right px-4 py-2.5 text-xs font-medium text-slate-500">Acciones</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-outline-variant">
+            <tbody className="divide-y divide-slate-50">
               {filtrados.map((inc) => (
-                <tr key={inc.id} className="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
-                  <td className="px-4 py-3 text-xs text-on-surface-variant whitespace-nowrap">
+                <tr key={inc.id} className="bg-white hover:bg-slate-50 transition-colors">
+                  <td className="px-4 py-3 text-xs text-slate-500 whitespace-nowrap">
                     {format(new Date(inc.fecha_hora), 'dd/MM/yyyy HH:mm', { locale: es })}
                   </td>
-                  <td className="px-4 py-3 text-sm font-medium text-on-surface">
+                  <td className="px-4 py-3 text-sm font-medium text-slate-900">
                     {inc.nnya ? `${inc.nnya.apellido}, ${inc.nnya.nombre}` : '—'}
-                    {inc.legajo && <span className="ml-1.5 text-xs text-outline">{inc.legajo.numero_legajo}</span>}
+                    {inc.legajo && <span className="ml-1.5 text-xs text-slate-400">{inc.legajo.numero_legajo}</span>}
                   </td>
-                  <td className="px-4 py-3 text-sm text-on-surface-variant">{inc.tipo}</td>
+                  <td className="px-4 py-3 text-sm text-slate-700">{inc.tipo}</td>
                   <td className="px-4 py-3"><GravedadBadge gravedad={inc.gravedad} /></td>
                   <td className="px-4 py-3">
-                    <span className="text-xs text-on-surface-variant">{inc.estado.replace('_', ' ')}</span>
+                    <span className="text-xs text-slate-500">{inc.estado.replace('_', ' ')}</span>
                   </td>
                   <td className="px-4 py-3 text-right">
                     {inc.legajo_id && (
@@ -211,7 +230,7 @@ export default function IncidentesPage() {
               ))}
             </tbody>
           </table>
-          <div className="px-4 py-2.5 bg-surface-container-low border-t border-outline-variant text-xs text-outline">
+          <div className="px-4 py-2.5 bg-slate-50 border-t border-slate-100 text-xs text-slate-400">
             {filtrados.length} incidente{filtrados.length !== 1 ? 's' : ''} mostrado{filtrados.length !== 1 ? 's' : ''}
           </div>
         </div>

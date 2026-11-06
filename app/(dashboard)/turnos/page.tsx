@@ -33,9 +33,9 @@ function EstadoBadge({ turno }: { turno: Turno }) {
   if (turno.estado === 'realizado') return <Badge variant="success">Realizado</Badge>
   if (turno.estado === 'cancelado') return <Badge variant="secondary">Cancelado</Badge>
   if (turno.estado === 'ausente') return <Badge variant="destructive">Ausente</Badge>
-  if (turno.estado === 'confirmado') return <Badge className="bg-primary-container text-on-primary-container border border-serie-1/30">Confirmado</Badge>
+  if (turno.estado === 'confirmado') return <Badge className="bg-blue-100 text-blue-700 border border-blue-200">Confirmado</Badge>
   if (esFuturo(turno.fecha_hora)) return <Badge variant="outline">Programado</Badge>
-  return <Badge className="bg-tertiary-fixed text-on-tertiary-fixed border border-tertiary/30">Sin confirmar</Badge>
+  return <Badge className="bg-amber-100 text-amber-700 border border-amber-200">Sin confirmar</Badge>
 }
 
 const ESTADO_TABS: { value: FiltroEstado; label: string }[] = [
@@ -79,18 +79,18 @@ function CancelarModal({ turno, onClose }: CancelarModalProps) {
         <DialogHeader><DialogTitle>Cancelar turno</DialogTitle></DialogHeader>
         {turno && (
           <div className="space-y-3 pt-1">
-            <div className="bg-surface-container-low rounded-lg p-3 text-sm">
-              <p className="font-medium text-on-surface">{turno.tipo}</p>
+            <div className="bg-slate-50 rounded-lg p-3 text-sm">
+              <p className="font-medium text-slate-900">{turno.tipo}</p>
               {turno.nnya && (
-                <p className="text-on-surface-variant text-xs mt-0.5">NNyA: {turno.nnya.apellido}, {turno.nnya.nombre}</p>
+                <p className="text-slate-500 text-xs mt-0.5">NNyA: {turno.nnya.apellido}, {turno.nnya.nombre}</p>
               )}
-              <p className="text-outline text-xs mt-0.5">
+              <p className="text-slate-400 text-xs mt-0.5">
                 {format(new Date(turno.fecha_hora), "dd/MM/yyyy HH:mm", { locale: es })}
               </p>
             </div>
             <div>
-              <label className="text-sm font-medium text-on-surface-variant mb-1.5 block">
-                Motivo <span className="text-outline">(opcional)</span>
+              <label className="text-sm font-medium text-slate-700 mb-1.5 block">
+                Motivo <span className="text-slate-400">(opcional)</span>
               </label>
               <Textarea
                 value={observaciones}
@@ -171,39 +171,37 @@ export default function TurnosPage() {
   const pasadosCount = turnos.filter((t) => (t.estado === 'programado' || t.estado === 'confirmado') && !esFuturo(t.fecha_hora)).length
 
   return (
-    <div className="px-8 py-6 space-y-6">
+    <div className="p-6 max-w-3xl space-y-6">
       {/* Header */}
       <div>
         <div className="flex items-center gap-3 mb-1 flex-wrap">
-          <h1 className="text-title font-semibold text-on-surface">Turnos</h1>
+          <h1 className="text-xl font-semibold text-slate-900">Turnos</h1>
           {proximosCount > 0 && (
-            <span className="bg-primary-container text-on-primary-container text-xs font-semibold px-2 py-0.5 rounded-full">
+            <span className="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-0.5 rounded-full">
               {proximosCount} próximo{proximosCount !== 1 ? 's' : ''}
             </span>
           )}
           {pasadosCount > 0 && (
-            <span className="bg-tertiary-fixed text-on-tertiary-fixed text-xs font-semibold px-2 py-0.5 rounded-full">
+            <span className="bg-amber-100 text-amber-700 text-xs font-semibold px-2 py-0.5 rounded-full">
               {pasadosCount} sin confirmar
             </span>
           )}
         </div>
-        <p className="text-sm text-on-surface-variant">Vista global de todos los turnos agendados en el sistema.</p>
+        <p className="text-sm text-slate-500">Vista global de todos los turnos agendados en el sistema.</p>
       </div>
 
       {/* Filtros */}
       <div className="space-y-3">
-        <div role="tablist" aria-label="Estado" className="flex flex-wrap gap-5 border-b border-filete">
+        <div className="flex gap-1 bg-slate-100 p-1 rounded-lg w-fit">
           {ESTADO_TABS.map(({ value, label }) => (
             <button
               key={value}
-              role="tab"
-              aria-selected={filtroEstado === value}
               onClick={() => setFiltroEstado(value)}
               className={cn(
-                '-mb-px border-b-2 pb-2.5 pt-1 text-body font-medium transition-colors focus-visible:outline-2',
+                'px-3 py-1.5 rounded-md text-sm font-medium transition-colors',
                 filtroEstado === value
-                  ? 'border-ink text-on-surface'
-                  : 'border-transparent text-outline hover:text-on-surface'
+                  ? 'bg-white text-slate-900 shadow-sm'
+                  : 'text-slate-500 hover:text-slate-700'
               )}
             >
               {label}
@@ -224,13 +222,13 @@ export default function TurnosPage() {
             </SelectContent>
           </Select>
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-outline" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <input
               type="text"
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
               placeholder="Buscar por NNyA, profesional o tipo..."
-              className="w-full pl-9 pr-3 py-2 text-sm border border-outline-variant rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
+              className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
             />
           </div>
         </div>
@@ -238,44 +236,44 @@ export default function TurnosPage() {
 
       {/* Lista */}
       {isLoading ? (
-        <p className="text-sm text-outline py-8 text-center">Cargando turnos...</p>
+        <p className="text-sm text-slate-400 py-8 text-center">Cargando turnos...</p>
       ) : turnosFiltrados.length === 0 ? (
         <div className="py-12 text-center">
-          <CalendarClock className="h-8 w-8 text-outline mx-auto mb-2" />
-          <p className="text-sm text-outline">No hay turnos que coincidan con los filtros</p>
+          <CalendarClock className="h-8 w-8 text-slate-300 mx-auto mb-2" />
+          <p className="text-sm text-slate-400">No hay turnos que coincidan con los filtros</p>
         </div>
       ) : (
-        <div className="divide-y divide-outline-variant border border-outline-variant rounded-lg overflow-hidden">
+        <div className="divide-y divide-slate-100 border border-slate-100 rounded-lg overflow-hidden">
           {turnosFiltrados.map((turno) => {
             const futuro = esFuturo(turno.fecha_hora)
             const puedeAccionar = turno.estado === 'programado' || turno.estado === 'confirmado'
 
             return (
-              <div key={turno.id} className="p-4 bg-surface-container-lowest">
+              <div key={turno.id} className="p-4 bg-white">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1 min-w-0 space-y-1.5">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-sm font-medium text-on-surface">{turno.tipo}</span>
+                      <span className="text-sm font-medium text-slate-900">{turno.tipo}</span>
                       <EstadoBadge turno={turno} />
                     </div>
 
                     {turno.nnya && (
-                      <p className="text-xs text-on-surface-variant">
+                      <p className="text-xs text-slate-500">
                         NNyA: <span className="font-medium">{turno.nnya.apellido}, {turno.nnya.nombre}</span>
                       </p>
                     )}
 
-                    <div className="flex items-center gap-3 flex-wrap text-xs text-outline">
+                    <div className="flex items-center gap-3 flex-wrap text-xs text-slate-400">
                       <span>{format(new Date(turno.fecha_hora), "dd/MM/yyyy HH:mm", { locale: es })}</span>
                       {turno.profesional && <span>· {turno.profesional}</span>}
                       {turno.lugar && <span>· {turno.lugar}</span>}
                     </div>
 
                     {turno.motivo && (
-                      <p className="text-xs text-on-surface-variant italic">{turno.motivo}</p>
+                      <p className="text-xs text-slate-500 italic">{turno.motivo}</p>
                     )}
                     {turno.observaciones && (
-                      <p className="text-xs text-on-surface-variant italic">Obs: {turno.observaciones}</p>
+                      <p className="text-xs text-slate-500 italic">Obs: {turno.observaciones}</p>
                     )}
                   </div>
 
@@ -288,7 +286,7 @@ export default function TurnosPage() {
                           'h-7 text-xs',
                           futuro
                             ? 'opacity-40 cursor-not-allowed'
-                            : 'border-exito/30 text-exito hover:bg-exito-container'
+                            : 'border-green-300 text-green-700 hover:bg-green-50'
                         )}
                         onClick={() => handleRealizado(turno)}
                         disabled={actualizar.isPending}
@@ -300,7 +298,7 @@ export default function TurnosPage() {
                       <Button
                         size="sm"
                         variant="outline"
-                        className="h-7 text-xs border-error/30 text-error hover:bg-error-container"
+                        className="h-7 text-xs border-red-200 text-red-600 hover:bg-red-50"
                         onClick={() => setTurnoACancelar(turno)}
                         disabled={actualizar.isPending}
                       >

@@ -1,75 +1,34 @@
-import Link from 'next/link'
-import { ArrowDownRight, ArrowRight, ArrowUpRight } from 'lucide-react'
+import * as React from 'react'
 import { cn } from '@/lib/utils'
 
-export interface Variacion {
-  valor: number
-  // Período de comparación, por ejemplo "septiembre".
-  vs: string
-  // Si subir es bueno, malo o ninguna de las dos cosas: decide el color.
-  sentido: 'subir-bueno' | 'subir-malo' | 'neutral'
-}
-
-export interface Stat {
-  id: string
+interface KPICardProps {
   label: string
-  valor: number | string
-  unidad?: string
-  // Dato breve junto a la cifra (por ejemplo "1 crítica"); solo cuando aporta.
-  insignia?: string
-  variacion?: Variacion
-  href?: string
+  value: number | string
+  icon?: React.ReactNode
+  variant?: 'default' | 'primary' | 'error' | 'secondary'
+  description?: string
 }
 
-// Variación contra el período anterior (plan 054): diferencia absoluta con signo,
-// flecha y texto; el color sale de si el cambio es bueno o malo, nunca solo de la dirección.
-function LineaVariacion({ v }: { v: Variacion }) {
-  const bueno = v.sentido === 'subir-bueno' ? v.valor > 0 : v.sentido === 'subir-malo' ? v.valor < 0 : null
-  const color = v.valor === 0 || bueno === null ? 'text-on-surface-variant' : bueno ? 'text-exito' : 'text-error'
-  const Flecha = v.valor > 0 ? ArrowUpRight : v.valor < 0 ? ArrowDownRight : ArrowRight
-  const signo = v.valor > 0 ? '+' : v.valor < 0 ? '−' : ''
-  const leido = v.valor === 0 ? `Sin cambios respecto de ${v.vs}` : `${v.valor > 0 ? 'Subió' : 'Bajó'} ${Math.abs(v.valor)} respecto de ${v.vs}`
-  return (
-    <p className="mt-1.5 flex items-center gap-1 text-caption">
-      <span className={cn('inline-flex items-center gap-0.5 font-semibold', color)} aria-hidden="true">
-        <Flecha className="h-3.5 w-3.5" />
-        {signo}{Math.abs(v.valor)}
-      </span>
-      <span className="text-outline" aria-hidden="true">vs. {v.vs}</span>
-      <span className="sr-only">{leido}</span>
-    </p>
-  )
+const iconBg: Record<NonNullable<KPICardProps['variant']>, string> = {
+  default: 'bg-surface-container',
+  primary: 'bg-primary-fixed',
+  error: 'bg-error-container',
+  secondary: 'bg-secondary-container',
 }
 
-// Fila de cifras sin tarjetas (plan 052): separadas por aire, con unidad, insignia y,
-// si la hay, la variación. Cifras proporcionales para números grandes.
-export function StatRow({ stats }: { stats: Stat[] }) {
+export function KPICard({ label, value, icon, variant = 'default', description }: KPICardProps) {
   return (
-    <dl className="grid grid-cols-2 gap-x-6 gap-y-5 md:grid-cols-3 xl:grid-cols-6">
-      {stats.map((s) => {
-        const contenido = (
-          <>
-            <dt className="text-small text-on-surface-variant">{s.label}</dt>
-            <dd className="mt-1.5">
-              <span className="flex flex-wrap items-baseline gap-x-1.5 gap-y-1">
-                <span className="text-display font-semibold text-on-surface">{s.valor}</span>
-                {s.unidad && <span className="text-small text-on-surface-variant">{s.unidad}</span>}
-                {s.insignia && (
-                  <span className="self-center rounded-md bg-ink px-1.5 py-0.5 text-caption font-medium text-white">{s.insignia}</span>
-                )}
-              </span>
-              {s.variacion && <LineaVariacion v={s.variacion} />}
-            </dd>
-          </>
-        )
-        return s.href ? (
-          <Link key={s.id} href={s.href} className="-m-2 rounded-lg p-2 transition-colors hover:bg-surface-container-low focus-visible:outline-2">
-            {contenido}
-          </Link>
-        ) : (
-          <div key={s.id}>{contenido}</div>
-        )
-      })}
-    </dl>
+    <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col gap-3">
+      {icon && (
+        <div className={cn('w-10 h-10 rounded-full flex items-center justify-center', iconBg[variant])}>
+          {icon}
+        </div>
+      )}
+      <div>
+        <p className="font-heading text-3xl font-bold text-on-surface">{value}</p>
+        <p className="text-sm text-on-surface-variant mt-0.5">{label}</p>
+        {description && <p className="text-xs text-outline mt-1">{description}</p>}
+      </div>
+    </div>
   )
 }
