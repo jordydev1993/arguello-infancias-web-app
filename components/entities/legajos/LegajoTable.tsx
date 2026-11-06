@@ -11,8 +11,6 @@ interface LegajoTableProps {
   data: Legajo[]
   loading?: boolean
   onView?: (row: Legajo) => void
-  // NNyA con una alerta de incidente sin resolver: se marca "Incidente pendiente" (plan 037)
-  nnyaConIncidentePendiente?: Set<string>
 }
 
 function estadoBadge(estado: Legajo['estado']) {
@@ -20,14 +18,14 @@ function estadoBadge(estado: Legajo['estado']) {
   return <Badge variant={map[estado]}>{estado.charAt(0).toUpperCase() + estado.slice(1)}</Badge>
 }
 
-const buildColumns = (nnyaConIncidentePendiente?: Set<string>): Column<Legajo>[] => [
+const columns: Column<Legajo>[] = [
   { key: 'numero_legajo', header: 'N° Legajo', className: 'w-40 font-mono', render: (r) => r.numero_legajo },
   {
     key: 'nnya',
     header: 'NNyA',
     render: (r) => r.nnya
       ? <span>{(r.nnya as any).apellido}, {(r.nnya as any).nombre}</span>
-      : <span className="text-outline">—</span>,
+      : <span className="text-slate-400">—</span>,
   },
   {
     key: 'fecha_apertura',
@@ -41,25 +39,13 @@ const buildColumns = (nnyaConIncidentePendiente?: Set<string>): Column<Legajo>[]
       }
     },
   },
-  {
-    key: 'estado',
-    header: 'Estado',
-    className: 'w-48',
-    render: (r) => (
-      <div className="flex items-center gap-1.5 flex-wrap">
-        {estadoBadge(r.estado)}
-        {nnyaConIncidentePendiente?.has(r.nnya_id) && (
-          <Badge className="bg-tertiary-fixed text-on-tertiary-fixed border border-tertiary/30">Incidente pendiente</Badge>
-        )}
-      </div>
-    ),
-  },
+  { key: 'estado', header: 'Estado', className: 'w-28', render: (r) => estadoBadge(r.estado) },
 ]
 
-export function LegajoTable({ data, loading, onView, nnyaConIncidentePendiente }: LegajoTableProps) {
+export function LegajoTable({ data, loading, onView }: LegajoTableProps) {
   return (
     <DataTable
-      columns={buildColumns(nnyaConIncidentePendiente)}
+      columns={columns}
       data={data}
       loading={loading}
       extraActions={(row) =>

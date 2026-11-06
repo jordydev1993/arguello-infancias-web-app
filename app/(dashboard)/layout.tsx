@@ -1,232 +1,126 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { AuthProvider, useAuth } from '@/context/AuthContext'
 import { QueryProvider } from '@/components/providers/QueryProvider'
 import { Toaster } from '@/components/ui/toaster'
-import { ChevronDown, ChevronsUpDown, CircleHelp, LogOut, Search, Star } from 'lucide-react'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { cn } from '@/lib/utils'
 import {
-  INICIO, esRutaActiva, favoritosVisibles, gruposVisibles, ubicacion, type GrupoId,
-} from '@/lib/navegacion'
+  Users, User, FileText, Home, BookOpen, Shield, UserCheck,
+  LogOut, AlertTriangle, CalendarClock, Siren, PartyPopper, Contact2,
+  ClipboardCheck, KanbanSquare, UserCog, HeartHandshake,
+} from 'lucide-react'
+import { cn } from '@/lib/utils'
 import { useAlertasPendientesCount } from '@/hooks/alertas/useAlertasPendientesCount'
 import { useNotificacionesPropuestasCount } from '@/hooks/propuestas-mejora/useNotificacionesPropuestasCount'
 
-function Contador({ count }: { count: number | undefined }) {
+const NAV_ALL = [
+  { href: '/dashboard', label: 'Inicio', icon: Home },
+  { href: '/nnya', label: 'NNyA', icon: Users },
+  { href: '/legajos', label: 'Legajos', icon: BookOpen },
+  { href: '/tutores', label: 'Tutores', icon: UserCheck },
+  { href: '/referentes', label: 'Referentes', icon: Contact2 },
+]
+
+const NAV_ADMIN_TECNICO = [
+  { href: '/incidentes', label: 'Incidentes', icon: Siren },
+  { href: '/alertas', label: 'Alertas', icon: AlertTriangle },
+  { href: '/turnos', label: 'Turnos', icon: CalendarClock },
+  { href: '/turnos-personal', label: 'Turnos de Personal', icon: UserCog },
+  { href: '/actividades', label: 'Actividades', icon: PartyPopper },
+  { href: '/informes', label: 'Informes', icon: FileText },
+  { href: '/evaluacion-institucional', label: 'Evaluación Institucional', icon: ClipboardCheck },
+  { href: '/propuestas-mejora', label: 'Propuestas de Mejora', icon: KanbanSquare },
+  { href: '/seguimiento-post-egreso', label: 'Seguimiento Post-Egreso', icon: HeartHandshake },
+]
+
+const NAV_ADMIN_ONLY = [
+  { href: '/usuarios', label: 'Usuarios', icon: User },
+  { href: '/roles', label: 'Roles', icon: Shield },
+]
+
+function AlertasBadge() {
+  const { data: count } = useAlertasPendientesCount()
   if (!count) return null
   return (
-    <span className="ml-auto min-w-5 rounded-full bg-error px-1.5 text-center text-caption font-semibold leading-5 text-on-error">
+    <span className="ml-auto bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[1.25rem] text-center leading-4">
       {count > 99 ? '99+' : count}
     </span>
   )
 }
 
-function AlertasBadge() {
-  const { data: count } = useAlertasPendientesCount()
-  return <Contador count={count} />
-}
-
 function PropuestasBadge() {
   const { data: count } = useNotificacionesPropuestasCount()
-  return <Contador count={count} />
+  if (!count) return null
+  return (
+    <span className="ml-auto bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[1.25rem] text-center leading-4">
+      {count > 99 ? '99+' : count}
+    </span>
+  )
 }
 
-const enlace = 'flex min-h-9 items-center gap-2.5 rounded-md px-2.5 text-body text-on-surface-variant transition-colors hover:bg-surface-container hover:text-on-surface focus-visible:outline-2 focus-visible:-outline-offset-2'
-const enlaceActivo = 'bg-surface-container font-semibold text-on-surface'
-
-// Barra lateral clara (plan 052): buscador y favoritos (solo diseño), Inicio y grupos
-// plegables con los mismos módulos y filtros por rol de siempre.
 function Sidebar() {
   const pathname = usePathname()
   const { role, loading, signOut } = useAuth()
-  const grupos = gruposVisibles(role, loading)
-  const favoritos = favoritosVisibles(role, loading)
-  const actual = ubicacion(pathname).grupo?.id
-  const [abiertos, setAbiertos] = useState<Partial<Record<GrupoId | 'favoritos', boolean>>>({ favoritos: true })
-  const abierto = (id: GrupoId | 'favoritos') => abiertos[id] ?? id === actual
-  const alternar = (id: GrupoId | 'favoritos') => setAbiertos((a) => ({ ...a, [id]: !abierto(id) }))
+
+  const navItems = [
+    ...NAV_ALL,
+    ...(!loading && (role === 'Admin' || role === 'Equipo Tecnico') ? NAV_ADMIN_TECNICO : []),
+    ...(!loading && role === 'Admin' ? NAV_ADMIN_ONLY : []),
+  ]
 
   return (
-    <aside className="flex w-60 shrink-0 flex-col border-r border-filete bg-surface-container-low">
-      <div className="flex items-center gap-2.5 px-4 pb-3 pt-4">
-        <span className="flex h-7 w-7 items-center justify-center rounded-md bg-ink text-small font-bold text-white" aria-hidden="true">A</span>
-        <div className="leading-tight">
-          <p className="text-body font-semibold text-on-surface">Argüello Infancias</p>
-          <p className="text-caption text-outline">Residencia NNyA</p>
-        </div>
+    <aside className="w-60 bg-surface-container-lowest border-r border-outline-variant flex flex-col shrink-0">
+      <div className="px-4 py-5 border-b border-outline-variant">
+        <h1 className="font-heading font-bold text-primary text-sm tracking-tight">Argüello Infancias</h1>
+        <p className="text-xs text-on-surface-variant mt-0.5">Residencia NNyA</p>
       </div>
 
-      <div className="px-3 pb-2">
-        {/* Buscador ⌘K: solo diseño (plan 052). No busca todavía. */}
-        <button
-          type="button"
-          disabled
-          title="Próximamente"
-          className="flex h-9 w-full cursor-not-allowed items-center gap-2 rounded-md border border-outline-variant bg-surface-container-lowest px-2.5 text-body text-outline"
-        >
-          <Search className="h-4 w-4" aria-hidden="true" />
-          Buscar
-          <kbd className="ml-auto rounded border border-outline-variant px-1 font-sans text-caption">⌘K</kbd>
-          <span className="sr-only">(próximamente)</span>
-        </button>
-      </div>
-
-      <nav className="flex-1 space-y-1 overflow-y-auto px-3 pb-3" aria-label="Módulos">
-        {favoritos.length > 0 && (
-          <div>
-            <button type="button" onClick={() => alternar('favoritos')} aria-expanded={abierto('favoritos')} className={cn(enlace, 'w-full')}>
-              <Star className="h-4 w-4 shrink-0" aria-hidden="true" />
-              Favoritos
-              <ChevronDown className={cn('ml-auto h-4 w-4 transition-transform', !abierto('favoritos') && '-rotate-90')} aria-hidden="true" />
-            </button>
-            {abierto('favoritos') && (
-              <ul className="mb-2 mt-0.5 space-y-0.5 pl-6">
-                {favoritos.map((f) => (
-                  <li key={f.href}>
-                    <Link href={f.href} className={cn(enlace, 'min-h-8 text-small')}>{f.label}</Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        )}
-
-        <div className="my-2 border-t border-filete" />
-
-        <Link
-          href={INICIO.href}
-          aria-current={esRutaActiva(pathname, INICIO.href) ? 'page' : undefined}
-          className={cn(enlace, esRutaActiva(pathname, INICIO.href) && enlaceActivo)}
-        >
-          <INICIO.icon className="h-4 w-4 shrink-0" aria-hidden="true" />
-          {INICIO.label}
-        </Link>
-
-        {grupos.map((grupo) => (
-          <div key={grupo.id}>
-            <button type="button" onClick={() => alternar(grupo.id)} aria-expanded={abierto(grupo.id)} className={cn(enlace, 'w-full', actual === grupo.id && 'text-on-surface')}>
-              <grupo.icon className="h-4 w-4 shrink-0" aria-hidden="true" />
-              {grupo.nombre}
-              <ChevronDown className={cn('ml-auto h-4 w-4 transition-transform', !abierto(grupo.id) && '-rotate-90')} aria-hidden="true" />
-            </button>
-            {abierto(grupo.id) && (
-              <ul className="mb-1 mt-0.5 space-y-0.5 pl-6">
-                {grupo.items.map(({ href, label }) => {
-                  const activo = esRutaActiva(pathname, href)
-                  return (
-                    <li key={href}>
-                      <Link href={href} aria-current={activo ? 'page' : undefined} className={cn(enlace, 'min-h-8 text-small', activo && enlaceActivo)}>
-                        {label}
-                        {href === '/alertas' && <AlertasBadge />}
-                        {href === '/propuestas-mejora' && <PropuestasBadge />}
-                      </Link>
-                    </li>
-                  )
-                })}
-              </ul>
-            )}
-          </div>
-        ))}
+      <nav className="flex-1 px-3 py-3 space-y-0.5 overflow-y-auto">
+        {navItems.map(({ href, label, icon: Icon }) => {
+          const active = pathname === href || (href !== '/dashboard' && pathname.startsWith(`${href}/`))
+          return (
+            <Link
+              key={href}
+              href={href}
+              className={cn(
+                'flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors',
+                active
+                  ? 'bg-secondary-container text-on-secondary-container font-semibold'
+                  : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface'
+              )}
+            >
+              <Icon className={cn('h-4 w-4 shrink-0', active ? 'text-primary' : 'text-outline')} />
+              {label}
+              {href === '/alertas' && <AlertasBadge />}
+              {href === '/propuestas-mejora' && <PropuestasBadge />}
+            </Link>
+          )
+        })}
       </nav>
 
-      <div className="border-t border-filete p-3">
-        <Cuenta onSignOut={signOut} />
+      <div className="px-3 py-3 border-t border-outline-variant">
+        <button
+          onClick={() => signOut()}
+          className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-on-surface-variant hover:bg-surface-container w-full transition-colors"
+        >
+          <LogOut className="h-4 w-4 text-outline" />
+          Cerrar sesión
+        </button>
       </div>
     </aside>
   )
-}
-
-function iniciales(email: string | undefined) {
-  if (!email) return '·'
-  const [nombre] = email.split('@')
-  const partes = nombre.split(/[._-]/).filter(Boolean)
-  return (partes.length > 1 ? partes[0][0] + partes[1][0] : nombre.slice(0, 2)).toUpperCase()
-}
-
-// Cuenta al pie de la barra lateral (plan 054): avatar, email y rol, con un menú que
-// tiene "Cerrar sesión". No se agregan opciones que el sistema no tiene.
-function Cuenta({ onSignOut }: { onSignOut: () => void }) {
-  const { user, role } = useAuth()
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger className="flex w-full items-center gap-2.5 rounded-lg border border-outline-variant bg-surface-container-lowest p-2 text-left transition-colors hover:bg-surface-container-low focus-visible:outline-2">
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ink text-caption font-semibold text-white" aria-hidden="true">
-          {iniciales(user?.email)}
-        </span>
-        <span className="min-w-0 flex-1 leading-tight">
-          <span className="block truncate text-small font-medium text-on-surface">{user?.email}</span>
-          <span className="block text-caption text-outline">{role}</span>
-        </span>
-        <ChevronsUpDown className="h-4 w-4 shrink-0 text-outline" aria-hidden="true" />
-        <span className="sr-only">Abrir el menú de la cuenta</span>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent side="top" align="start" className="w-(--radix-dropdown-menu-trigger-width)">
-        <DropdownMenuLabel>
-          <span className="block truncate font-medium text-on-surface">{user?.email}</span>
-          {role}
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onSelect={() => onSignOut()}>
-          <LogOut className="h-4 w-4 text-outline" aria-hidden="true" />
-          Cerrar sesión
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  )
-}
-
-// Barra superior: dónde estás (grupo / módulo) y ayuda (solo diseño). La cuenta está al
-// pie de la barra lateral (plan 054).
-function BarraSuperior() {
-  const pathname = usePathname()
-  const { grupo, item } = ubicacion(pathname)
-
-  return (
-    <header className="flex h-14 shrink-0 items-center gap-4 border-b border-filete px-8">
-      <nav aria-label="Ruta" className="flex items-center gap-2 text-body">
-        {grupo && <span className="text-outline">{grupo.nombre}</span>}
-        {grupo && <span className="text-outline-variant" aria-hidden="true">/</span>}
-        <span className="font-semibold text-on-surface">{item.label}</span>
-      </nav>
-      <div className="ml-auto flex items-center gap-4">
-        <button type="button" disabled title="Próximamente" className="flex cursor-not-allowed items-center gap-1.5 text-body text-outline">
-          <CircleHelp className="h-4 w-4" aria-hidden="true" />
-          Ayuda
-          <span className="sr-only">(próximamente)</span>
-        </button>
-      </div>
-    </header>
-  )
-}
-
-// Área de contenido con scroll propio (plan 052). Next solo reinicia el scroll de la
-// ventana al navegar, así que acá se vuelve arriba en cada cambio de ruta: si no, la página
-// nueva se abría desplazada y con el encabezado (y sus botones) fuera de la vista.
-function Contenido({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname()
-  const ref = useRef<HTMLElement>(null)
-  useEffect(() => { ref.current?.scrollTo({ top: 0 }) }, [pathname])
-  return <main ref={ref} className="relative flex-1 overflow-auto">{children}</main>
 }
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <QueryProvider>
       <AuthProvider>
-        {/* La app vive en un marco blanco redondeado sobre el fondo gris (plan 052). */}
-        <div className="h-screen overflow-hidden bg-surface p-3">
-          <div className="flex h-full overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest">
-            <Sidebar />
-            <div className="flex min-w-0 flex-1 flex-col">
-              <BarraSuperior />
-              {/* `relative`: los textos sr-only (posición absoluta) quedan dentro del área con scroll
-                  y no estiran la página (corte del marco al bajar, 22/10). */}
-              <Contenido>{children}</Contenido>
-            </div>
-          </div>
+        <div className="flex min-h-screen bg-surface">
+          <Sidebar />
+          <main className="flex-1 overflow-auto">
+            {children}
+          </main>
         </div>
         <Toaster />
       </AuthProvider>

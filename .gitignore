@@ -40,6 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# claude code
+.claude/
+
 # supabase temp
 supabase/.temp/
 
@@ -47,8 +50,3 @@ supabase/.temp/
 /backups/
 *.sql
 !supabase/migrations/*.sql
-# Pruebas en SQL: solo datos ficticios y ROLLBACK (ver tests/sql/)
-!tests/sql/*.sql
-
-# Configuración local de herramientas de editor
-.vscode/settings.local.json

@@ -43,7 +43,7 @@ export function MedicamentoForm({ legajoId, nnyaId, diagnosticos, onSubmit, onCa
   if (diagActivos.length === 0) {
     return (
       <div className="space-y-4">
-        <div className="flex items-start gap-2.5 rounded-lg border border-tertiary/30 bg-tertiary-fixed px-4 py-3 text-sm text-on-tertiary-fixed">
+        <div className="flex items-start gap-2.5 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700">
           <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />
           <span>
             No hay diagnósticos activos en este legajo. Registrá un diagnóstico primero antes de iniciar un tratamiento farmacológico. (M-EX-02)
@@ -75,11 +75,11 @@ export function MedicamentoForm({ legajoId, nnyaId, diagnosticos, onSubmit, onCa
                   <SelectItem key={d.id} value={d.id}>
                     <span className="font-medium">{d.tipo}</span>
                     {d.descripcion && (
-                      <span className="text-on-surface-variant ml-1.5">
+                      <span className="text-slate-500 ml-1.5">
                         — {d.descripcion.length > 50 ? d.descripcion.slice(0, 50) + '…' : d.descripcion}
                       </span>
                     )}
-                    <span className="ml-1.5 text-xs text-outline capitalize">({d.estado.replace('_', ' ')})</span>
+                    <span className="ml-1.5 text-xs text-slate-400 capitalize">({d.estado.replace('_', ' ')})</span>
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -114,7 +114,7 @@ export function MedicamentoForm({ legajoId, nnyaId, diagnosticos, onSubmit, onCa
         <FormField label="Fecha de fin" error={errors.fecha_fin?.message}>
           <Input {...register('fecha_fin')} type="date" />
           {errors.fecha_fin && (
-            <p className="text-xs text-tertiary mt-1">La fecha de fin no puede ser anterior al inicio.</p>
+            <p className="text-xs text-amber-600 mt-1">La fecha de fin no puede ser anterior al inicio.</p>
           )}
         </FormField>
 
